@@ -1,0 +1,15 @@
+{
+ "generated": "2026-10-24",
+ "circuits": [
+  {
+   "circuit_id": "0000018",
+   "label": "Circuit 18",
+   "premises": 893
+  },
+  {
+   "circuit_id": "0000109",
+   "label": "Circuit 109",
+   "premises": 1806
+  }
+ ]
+}

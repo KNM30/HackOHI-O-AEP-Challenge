@@ -1,0 +1,1037 @@
+{
+ "generated": "2026-10-24",
+ "source": "Install_Labor_HackOHIO.xlsx",
+ "ilm": {
+  "value": 4.5,
+  "cell": "Indirect Labor Multiplier!B1",
+  "note": "The ILM should be mutiplied time any labor hours to take into account drive time, safety discussion time, set up time, etc."
+ },
+ "categories": {
+  "Crossarm": {
+   "sheet": "Labor time material related",
+   "title_cell": "A1",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 3,
+     "Avg Install Hours": 0.3741146496815283,
+     "Avg Install Hours cell": "A3",
+     "Avg Removal Hours": 0.21217834394904417,
+     "Avg Removal Hours cell": "B3"
+    }
+   ]
+  },
+  "Bracket": {
+   "sheet": "Labor time material related",
+   "title_cell": "A5",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 7,
+     "Avg Install Hours": 0.6172394366197178,
+     "Avg Install Hours cell": "A7",
+     "Avg Removal Hours": 0.25442253521126756,
+     "Avg Removal Hours cell": "B7"
+    }
+   ]
+  },
+  "Pole": {
+   "sheet": "Labor time material related",
+   "title_cell": "A10",
+   "columns": [
+    "Size Group",
+    "Height Range",
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 12,
+     "Size Group": "Small",
+     "Size Group cell": "A12",
+     "Height Range": "25\u201335 ft",
+     "Height Range cell": "B12",
+     "Avg Install Hours": 1.9416103896103902,
+     "Avg Install Hours cell": "C12",
+     "Avg Removal Hours": 0.763636363636363,
+     "Avg Removal Hours cell": "D12"
+    },
+    {
+     "row": 13,
+     "Size Group": "Medium",
+     "Size Group cell": "A13",
+     "Height Range": "40\u201355 ft",
+     "Height Range cell": "B13",
+     "Avg Install Hours": 2.50295207667732,
+     "Avg Install Hours cell": "C13",
+     "Avg Removal Hours": 0.9274888178913726,
+     "Avg Removal Hours cell": "D13"
+    },
+    {
+     "row": 14,
+     "Size Group": "Large",
+     "Size Group cell": "A14",
+     "Height Range": "60 ft and above",
+     "Height Range cell": "B14",
+     "Avg Install Hours": 3.368367816091952,
+     "Avg Install Hours cell": "C14",
+     "Avg Removal Hours": 1.153195402298852,
+     "Avg Removal Hours cell": "D14"
+    }
+   ]
+  },
+  "Transformer": {
+   "sheet": "Labor time material related",
+   "title_cell": "A17",
+   "columns": [
+    "Size (kVA)",
+    "CU Count",
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 19,
+     "Size (kVA)": 10,
+     "Size (kVA) cell": "A19",
+     "CU Count": 35,
+     "CU Count cell": "B19",
+     "Avg Install Hours": 1.189485714285714,
+     "Avg Install Hours cell": "C19",
+     "Avg Removal Hours": 0.8082285714285719,
+     "Avg Removal Hours cell": "D19"
+    },
+    {
+     "row": 20,
+     "Size (kVA)": 15,
+     "Size (kVA) cell": "A20",
+     "CU Count": 32,
+     "CU Count cell": "B20",
+     "Avg Install Hours": 1.184,
+     "Avg Install Hours cell": "C20",
+     "Avg Removal Hours": 0.8000000000000004,
+     "Avg Removal Hours cell": "D20"
+    },
+    {
+     "row": 21,
+     "Size (kVA)": 25,
+     "Size (kVA) cell": "A21",
+     "CU Count": 47,
+     "CU Count cell": "B21",
+     "Avg Install Hours": 1.1880851063829778,
+     "Avg Install Hours cell": "C21",
+     "Avg Removal Hours": 0.8061276595744681,
+     "Avg Removal Hours cell": "D21"
+    },
+    {
+     "row": 22,
+     "Size (kVA)": 37,
+     "Size (kVA) cell": "A22",
+     "CU Count": 30,
+     "CU Count cell": "B22",
+     "Avg Install Hours": 1.2384,
+     "Avg Install Hours cell": "C22",
+     "Avg Removal Hours": 0.8816000000000005,
+     "Avg Removal Hours cell": "D22"
+    },
+    {
+     "row": 23,
+     "Size (kVA)": 50,
+     "Size (kVA) cell": "A23",
+     "CU Count": 47,
+     "CU Count cell": "B23",
+     "Avg Install Hours": 1.2445957446808502,
+     "Avg Install Hours cell": "C23",
+     "Avg Removal Hours": 0.890893617021277,
+     "Avg Removal Hours cell": "D23"
+    },
+    {
+     "row": 24,
+     "Size (kVA)": 75,
+     "Size (kVA) cell": "A24",
+     "CU Count": 41,
+     "CU Count cell": "B24",
+     "Avg Install Hours": 1.2776585365853663,
+     "Avg Install Hours cell": "C24",
+     "Avg Removal Hours": 0.9369756097560975,
+     "Avg Removal Hours cell": "D24"
+    },
+    {
+     "row": 25,
+     "Size (kVA)": 100,
+     "Size (kVA) cell": "A25",
+     "CU Count": 42,
+     "CU Count cell": "B25",
+     "Avg Install Hours": 1.2800000000000007,
+     "Avg Install Hours cell": "C25",
+     "Avg Removal Hours": 0.944,
+     "Avg Removal Hours cell": "D25"
+    },
+    {
+     "row": 26,
+     "Size (kVA)": 167,
+     "Size (kVA) cell": "A26",
+     "CU Count": 39,
+     "CU Count cell": "B26",
+     "Avg Install Hours": 1.2800000000000007,
+     "Avg Install Hours cell": "C26",
+     "Avg Removal Hours": 0.9439999999999997,
+     "Avg Removal Hours cell": "D26"
+    },
+    {
+     "row": 27,
+     "Size (kVA)": 250,
+     "Size (kVA) cell": "A27",
+     "CU Count": 13,
+     "CU Count cell": "B27",
+     "Avg Install Hours": 1.3304615384615381,
+     "Avg Install Hours cell": "C27",
+     "Avg Removal Hours": 0.9624615384615383,
+     "Avg Removal Hours cell": "D27"
+    },
+    {
+     "row": 28,
+     "Size (kVA)": 333,
+     "Size (kVA) cell": "A28",
+     "CU Count": 9,
+     "CU Count cell": "B28",
+     "Avg Install Hours": 1.3546666666666665,
+     "Avg Install Hours cell": "C28",
+     "Avg Removal Hours": 0.9759999999999999,
+     "Avg Removal Hours cell": "D28"
+    },
+    {
+     "row": 29,
+     "Size (kVA)": 500,
+     "Size (kVA) cell": "A29",
+     "CU Count": 9,
+     "CU Count cell": "B29",
+     "Avg Install Hours": 1.3795555555555552,
+     "Avg Install Hours cell": "C29",
+     "Avg Removal Hours": 0.9866666666666666,
+     "Avg Removal Hours cell": "D29"
+    },
+    {
+     "row": 30,
+     "Size (kVA)": 833,
+     "Size (kVA) cell": "A30",
+     "CU Count": 4,
+     "CU Count cell": "B30",
+     "Avg Install Hours": 1.364,
+     "Avg Install Hours cell": "C30",
+     "Avg Removal Hours": 0.98,
+     "Avg Removal Hours cell": "D30"
+    }
+   ]
+  },
+  "Anchor": {
+   "sheet": "Labor time material related",
+   "title_cell": "A33",
+   "columns": [
+    "CU Count",
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 35,
+     "CU Count": 40,
+     "CU Count cell": "A35",
+     "Avg Install Hours": 0.3972000000000001,
+     "Avg Install Hours cell": "B35",
+     "Avg Removal Hours": 0.11880000000000004,
+     "Avg Removal Hours cell": "C35"
+    }
+   ]
+  },
+  "Equipment Lead": {
+   "sheet": "Labor time material related",
+   "title_cell": "A38",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 40,
+     "Avg Install Hours": 0.6501904761904762,
+     "Avg Install Hours cell": "A40",
+     "Avg Removal Hours": 0.20609523809523825,
+     "Avg Removal Hours cell": "B40"
+    }
+   ]
+  },
+  "Grounding": {
+   "sheet": "Labor time material related",
+   "title_cell": "A43",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 45,
+     "Avg Install Hours": 0.5319565217391303,
+     "Avg Install Hours cell": "A45",
+     "Avg Removal Hours": 0.15296086956521746,
+     "Avg Removal Hours cell": "B45"
+    }
+   ]
+  },
+  "Guying": {
+   "sheet": "Labor time material related",
+   "title_cell": "A48",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 50,
+     "Avg Install Hours": 0.36703448275862083,
+     "Avg Install Hours cell": "A50",
+     "Avg Removal Hours": 0.16220689655172402,
+     "Avg Removal Hours cell": "B50"
+    }
+   ]
+  },
+  "Dead-End": {
+   "sheet": "Labor time material related",
+   "title_cell": "A53",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 55,
+     "Avg Install Hours": 0.10760784313725497,
+     "Avg Install Hours cell": "A55",
+     "Avg Removal Hours": 0.06400000000000004,
+     "Avg Removal Hours cell": "B55"
+    }
+   ]
+  },
+  "Insulator": {
+   "sheet": "Labor time material related",
+   "title_cell": "A58",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 60,
+     "Avg Install Hours": 0.04923076923076923,
+     "Avg Install Hours cell": "A60",
+     "Avg Removal Hours": 0.0393846153846154,
+     "Avg Removal Hours cell": "B60"
+    }
+   ]
+  },
+  "Pin": {
+   "sheet": "Labor time material related",
+   "title_cell": "A63",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 65,
+     "Avg Install Hours": 0.06606451612903229,
+     "Avg Install Hours cell": "A65",
+     "Avg Removal Hours": 0.042322580645161305,
+     "Avg Removal Hours cell": "B65"
+    }
+   ]
+  },
+  "Recloser": {
+   "sheet": "Labor time material related",
+   "title_cell": "A68",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 70,
+     "Avg Install Hours": 0.5726238532110097,
+     "Avg Install Hours cell": "A70",
+     "Avg Removal Hours": 0.5253577981651364,
+     "Avg Removal Hours cell": "B70"
+    }
+   ]
+  },
+  "Secondary Conductor Attachment": {
+   "sheet": "Labor time material related",
+   "title_cell": "A73",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 75,
+     "Avg Install Hours": 0.23258536585365866,
+     "Avg Install Hours cell": "A75",
+     "Avg Removal Hours": 0.12682926829268298,
+     "Avg Removal Hours cell": "B75"
+    }
+   ]
+  },
+  "Service": {
+   "sheet": "Labor time material related",
+   "title_cell": "A78",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 80,
+     "Avg Install Hours": 1.692981132075472,
+     "Avg Install Hours cell": "A80",
+     "Avg Removal Hours": 0.48000000000000004,
+     "Avg Removal Hours cell": "B80"
+    }
+   ]
+  },
+  "Switch": {
+   "sheet": "Labor time material related",
+   "title_cell": "A83",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 85,
+     "Avg Install Hours": 1.7579459459459466,
+     "Avg Install Hours cell": "A85",
+     "Avg Removal Hours": 1.0097297297297296,
+     "Avg Removal Hours cell": "B85"
+    }
+   ]
+  },
+  "Fuse Cutout": {
+   "sheet": "Labor time material related",
+   "title_cell": "A88",
+   "columns": [
+    "Avg Install Hours",
+    "Avg Removal Hours"
+   ],
+   "rows": [
+    {
+     "row": 90,
+     "Avg Install Hours": 0.25600000000000017,
+     "Avg Install Hours cell": "A90",
+     "Avg Removal Hours": 0.12800000000000009,
+     "Avg Removal Hours cell": "B90"
+    }
+   ]
+  }
+ },
+ "connectors": {
+  "sheet": "CNC",
+  "items": {
+   "CNC-HTA-10": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 2
+   },
+   "CNC-HTA-40": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 3
+   },
+   "CNC-HTA3-10": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 4
+   },
+   "CNC-HTA3-40": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 5
+   },
+   "CNC-LUBSB-600": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 6
+   },
+   "CNC-LUG-10": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 7
+   },
+   "CNC-LUG-1000": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 8
+   },
+   "CNC-LUG-1000A": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 9
+   },
+   "CNC-LUG-1000C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 10
+   },
+   "CNC-LUG-1033": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 11
+   },
+   "CNC-LUG-10A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 12
+   },
+   "CNC-LUG-10B-C": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 13
+   },
+   "CNC-LUG-10C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 14
+   },
+   "CNC-LUG-2": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 15
+   },
+   "CNC-LUG-20A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 16
+   },
+   "CNC-LUG-20C": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 17
+   },
+   "CNC-LUG-250A": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 18
+   },
+   "CNC-LUG-250C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 19
+   },
+   "CNC-LUG-2A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 20
+   },
+   "CNC-LUG-2C": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 21
+   },
+   "CNC-LUG-2CU": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 22
+   },
+   "CNC-LUG-300": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 23
+   },
+   "CNC-LUG-30A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 24
+   },
+   "CNC-LUG-30C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 25
+   },
+   "CNC-LUG-350": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 26
+   },
+   "CNC-LUG-350A": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 27
+   },
+   "CNC-LUG-350C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 28
+   },
+   "CNC-LUG-397": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 29
+   },
+   "CNC-LUG-40": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 30
+   },
+   "CNC-LUG-40A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 31
+   },
+   "CNC-LUG-40B-C": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 32
+   },
+   "CNC-LUG-40C": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 33
+   },
+   "CNC-LUG-477": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 34
+   },
+   "CNC-LUG-477A": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 35
+   },
+   "CNC-LUG-477B-C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 36
+   },
+   "CNC-LUG-500": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 37
+   },
+   "CNC-LUG-500A": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 38
+   },
+   "CNC-LUG-500C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 39
+   },
+   "CNC-LUG-556A": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 40
+   },
+   "CNC-LUG-556B-C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 41
+   },
+   "CNC-LUG-600": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 42
+   },
+   "CNC-LUG-750A": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 43
+   },
+   "CNC-LUG-750C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 44
+   },
+   "CNC-LUG-795": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 45
+   },
+   "CNC-LUG-795B-C": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 46
+   },
+   "CNC-LUGS-10A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 47
+   },
+   "CNC-LUGS-30": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 48
+   },
+   "CNC-LUGS-30A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 49
+   },
+   "CNC-LUGS-350A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 50
+   },
+   "CNC-LUGS-350C": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 51
+   },
+   "CNC-LUGS-40A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 52
+   },
+   "CNC-LUGS-40C": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 53
+   },
+   "CNC-LUGS-500A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 54
+   },
+   "CNC-LUGS-500C": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 55
+   },
+   "CNC-LUGS-750A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 56
+   },
+   "CNC-LUGS-750C": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 57
+   },
+   "CNC-LUGSB-600": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 58
+   },
+   "CNC-NTI-10": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 59
+   },
+   "CNC-NTI-2": {
+    "install": 0.032,
+    "removal": 0.048,
+    "row": 60
+   },
+   "CNC-NTI-40": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 61
+   },
+   "CNC-NTM-052": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 62
+   },
+   "CNC-NTS-052-MSGR": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 63
+   },
+   "CNC-NTS-2": {
+    "install": 0.064,
+    "removal": 0.016,
+    "row": 64
+   },
+   "CNC-NTS-40": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 65
+   },
+   "CNC-PFTS-052-MSGR": {
+    "install": 0.32,
+    "removal": 0.032,
+    "row": 66
+   },
+   "CNC-PIN-10A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 67
+   },
+   "CNC-PIN-20A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 68
+   },
+   "CNC-PIN-2A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 69
+   },
+   "CNC-PIN-350": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 70
+   },
+   "CNC-PIN-397": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 71
+   },
+   "CNC-PIN-4": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 72
+   },
+   "CNC-PIN-40A": {
+    "install": 0.16,
+    "removal": 0.048,
+    "row": 73
+   },
+   "CNC-PIN-477": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 74
+   },
+   "CNC-PIN-750A": {
+    "install": 0.224,
+    "removal": 0.064,
+    "row": 75
+   },
+   "CNC-PTM-052": {
+    "install": 0.32,
+    "removal": 0.032,
+    "row": 76
+   },
+   "CNC-SCPT-10A-15": {
+    "install": 0.624,
+    "removal": 0.032,
+    "row": 77
+   },
+   "CNC-SCPT-10A-35": {
+    "install": 0.624,
+    "removal": 0.032,
+    "row": 78
+   },
+   "CNC-SCPT-40A-15": {
+    "install": 0.624,
+    "removal": 0.032,
+    "row": 79
+   },
+   "CNC-SCPT-40A-35": {
+    "install": 0.624,
+    "removal": 0.032,
+    "row": 80
+   },
+   "CNC-SCPT-556A-15": {
+    "install": 0.624,
+    "removal": 0.032,
+    "row": 81
+   },
+   "CNC-SCPT-556A-35": {
+    "install": 0.624,
+    "removal": 0.032,
+    "row": 82
+   },
+   "CNC-SCPT-795A-15": {
+    "install": 0.624,
+    "removal": 0.032,
+    "row": 83
+   },
+   "CNC-SNB-10": {
+    "install": 0.144,
+    "removal": 0.032,
+    "row": 84
+   },
+   "CNC-SNB-2": {
+    "install": 0.064,
+    "removal": 0.016,
+    "row": 85
+   },
+   "CNC-SNB-40": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 86
+   },
+   "CNC-SNB-556": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 87
+   },
+   "CNC-SNI-10": {
+    "install": 0.128,
+    "removal": 0.016,
+    "row": 88
+   },
+   "CNC-SNI-2": {
+    "install": 0.064,
+    "removal": 0.016,
+    "row": 89
+   },
+   "CNC-SNI-40": {
+    "install": 0.096,
+    "removal": 0.016,
+    "row": 90
+   },
+   "CNC-STA-10": {
+    "install": 0.24,
+    "removal": 0.032,
+    "row": 91
+   },
+   "CNC-STA-2": {
+    "install": 0.16,
+    "removal": 0.032,
+    "row": 92
+   },
+   "CNC-STA-40": {
+    "install": 0.2,
+    "removal": 0.032,
+    "row": 93
+   },
+   "CNC-STC-10": {
+    "install": 0.624,
+    "removal": 0.032,
+    "row": 94
+   },
+   "CNC-STC-2": {
+    "install": 0.32,
+    "removal": 0.032,
+    "row": 95
+   },
+   "CNC-STC-40": {
+    "install": 0.464,
+    "removal": 0.032,
+    "row": 96
+   }
+  },
+  "average": {
+   "install": 0.2152,
+   "removal": 0.0448,
+   "count": 95,
+   "cells": "CNC!B2:C96",
+   "note": "Recomputed mean of the CU rows (matches the sheet's AVERAGE formula range). The sheet notes it includes all connector sizes and valid zero-hour records."
+  }
+ },
+ "labor_only": [
+  {
+   "original_intent": "Difficult Location",
+   "work_type": "Restricted Access Work",
+   "description": "Additional labor required when work is performed in locations with limited access, increased setup requirements, or reduced equipment maneuverability.",
+   "install_hours": 0.5,
+   "unit": "per occurrence (unit not stated)",
+   "cell": "Labor only work!D2"
+  },
+  {
+   "original_intent": "Backyard Adder",
+   "work_type": "Confined Property Access",
+   "description": "Additional labor required when work occurs in areas with restricted equipment access and higher material handling effort.",
+   "install_hours": 0.5,
+   "unit": "per occurrence (unit not stated)",
+   "cell": "Labor only work!D3"
+  },
+  {
+   "original_intent": "Off-Road / Track Access",
+   "work_type": "Remote Site Access",
+   "description": "Additional labor required when personnel, materials, or equipment must travel over non-standard access routes.",
+   "install_hours": 0.5,
+   "unit": "per occurrence (unit not stated)",
+   "cell": "Labor only work!D4"
+  },
+  {
+   "original_intent": "Hand Dig",
+   "work_type": "Manual Excavation",
+   "description": "Additional labor required when excavation activities cannot be performed using conventional equipment.",
+   "install_hours": 1.5,
+   "unit": "per cubic foot",
+   "cell": "Labor only work!D5"
+  },
+  {
+   "original_intent": "Rock Hole",
+   "work_type": "Difficult Excavation",
+   "description": "Additional labor required when subsurface conditions significantly increase excavation effort.",
+   "install_hours": 4.0,
+   "unit": "per cubic foot",
+   "cell": "Labor only work!D6"
+  },
+  {
+   "original_intent": "Pole Straighten / Rake",
+   "work_type": "Structural Realignment",
+   "description": "Additional labor required to adjust existing infrastructure to meet operational requirements.",
+   "install_hours": 0.544,
+   "unit": "per occurrence (unit not stated)",
+   "cell": "Labor only work!D7"
+  },
+  {
+   "original_intent": "Junction Pole Work",
+   "work_type": "Complex Work Location",
+   "description": "Additional labor associated with work performed where multiple assets or connections converge.",
+   "install_hours": null,
+   "unit": "per occurrence (unit not stated)",
+   "cell": "Labor only work!D8"
+  },
+  {
+   "original_intent": "Access Constraint Adder",
+   "work_type": "Apply when normal equipment access is obstructed or limited.",
+   "description": null,
+   "install_hours": 0.5,
+   "unit": "per occurrence (unit not stated)",
+   "cell": "Labor only work!D9"
+  },
+  {
+   "original_intent": "Remote Location Adder",
+   "work_type": "Apply when a work location cannot be reached using standard access methods.",
+   "description": null,
+   "install_hours": 1.312,
+   "unit": "per occurrence (unit not stated)",
+   "cell": "Labor only work!D10"
+  },
+  {
+   "original_intent": "Specialized Handling Adder",
+   "work_type": "Apply when additional transportation, lifting, or positioning resources are needed.",
+   "description": null,
+   "install_hours": 0.5,
+   "unit": "per occurrence (unit not stated)",
+   "cell": "Labor only work!D11"
+  },
+  {
+   "original_intent": "Site Complexity Adder",
+   "work_type": "Apply when physical site conditions substantially increase setup or execution effort.",
+   "description": null,
+   "install_hours": 0.5,
+   "unit": "per occurrence (unit not stated)",
+   "cell": "Labor only work!D12"
+  }
+ ],
+ "cu_groups": {
+  "ARM": "Install, remove, or relocate structural support components used to mount equipment and accessories such as crossarms.",
+  "BKT": "Install, remove, or relocate attachment hardware such as brackets used to secure devices to supporting structures.",
+  "POL": "Perform work involving installation, replacement, modification, or adjustment of a primary supporting structure.",
+  "ANC": "Install, remove, or relocate subsurface anchor support systems used to provide lateral stability to infrastructure.",
+  "EQL": "Install, remove, or relocate electrical connection assemblies between equipment assets.",
+  "GND": "Install, remove, or relocate grounding and bonding components used for safety and system continuity.",
+  "GYF": "Install, remove, or relocate tension-support hardware for guy wires used to stabilize elevated structures.",
+  "DEC": "Install, remove, or relocate mechanical termination assemblies used to secure conductors.",
+  "DEG": "Install, remove, or relocate formed conductor-retention devices.",
+  "INS": "Install, remove, or relocate insulating support assemblies used to separate energized components.",
+  "PIN": "Install, remove, or relocate mounting hardware that supports insulating equipment.",
+  "REC": "Install, remove, or relocate reclosers / automated electrical control equipment.",
+  "SAA": "Install, remove, or relocate hardware used to support secondary-level conductors and attachments.",
+  "SVC": "Install, remove, or relocate customer service connection conductors and associated attachments.",
+  "SWI": "Install, remove, or relocate switching and isolation equipment used to control circuit operation.",
+  "XCO": "Install, remove, or relocate protective interruption devices used for equipment isolation and overcurrent protection for transformers.",
+  "XRA": "Additional labor associated with restricted access locations, unusual equipment access requirements, or transportation constraints."
+ }
+}

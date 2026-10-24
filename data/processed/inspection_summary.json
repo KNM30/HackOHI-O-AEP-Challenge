@@ -1,0 +1,446 @@
+{
+ "generated": "2026-10-24",
+ "layers": {
+  "customer": {
+   "layer": "customer",
+   "file": "Data1/Customer_Clip.shp",
+   "records": 117642,
+   "geometry": "Point Z",
+   "crs": "WGS 84 (EPSG:4326)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "damage": {
+   "layer": "damage",
+   "file": "Data1/arcos_prod_damage_09_28_Clip.shp",
+   "records": 1659,
+   "geometry": "Point Z",
+   "crs": "WGS 84 (EPSG:4326)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "pole": {
+   "layer": "pole",
+   "file": "Data1/Pole_Clip.shp",
+   "records": 107013,
+   "geometry": "Point Z",
+   "crs": "WGS 84 (EPSG:4326)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "primary": {
+   "layer": "primary",
+   "file": "Data1/Primary_ExportFeatures.shp",
+   "records": 62788,
+   "geometry": "LineString",
+   "crs": "WGS 84 (EPSG:4326)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "fuse": {
+   "layer": "fuse",
+   "file": "Data1/Fuse_Bank_Clip.shp",
+   "records": 7616,
+   "geometry": "Point Z",
+   "crs": "WGS 84 (EPSG:4326)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "ambulance": {
+   "layer": "ambulance",
+   "file": "Data1/Ambulance_Servi_Pairwis_Clip.shp",
+   "records": 10,
+   "geometry": "Point Z",
+   "crs": "WGS 84 / Pseudo-Mercator + NAVD88 height (horizontal EPSG:3857)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "fire": {
+   "layer": "fire",
+   "file": "Data1/Fire_Stations_E_Pairwis_Clip.shp",
+   "records": 37,
+   "geometry": "Point Z",
+   "crs": "WGS 84 / Pseudo-Mercator + NAVD88 height (horizontal EPSG:3857)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "hospital": {
+   "layer": "hospital",
+   "file": "Data1/Hospitals_Medic_Pairwis_Clip.shp",
+   "records": 5,
+   "geometry": "Point Z",
+   "crs": "WGS 84 / Pseudo-Mercator + NAVD88 height (horizontal EPSG:3857)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "secondary": {
+   "layer": "secondary",
+   "file": "Data2/Secondary_ExportFeatures.shp",
+   "records": 127403,
+   "geometry": "LineString",
+   "crs": "WGS 84 (EPSG:4326)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "transformer": {
+   "layer": "transformer",
+   "file": "Data2/Transformer_Clip.shp",
+   "records": 26959,
+   "geometry": "Point Z",
+   "crs": "WGS 84 (EPSG:4326)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "switch": {
+   "layer": "switch",
+   "file": "Data2/Switch_Clip.shp",
+   "records": 900,
+   "geometry": "Point Z",
+   "crs": "WGS 84 (EPSG:4326)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  },
+  "recloser": {
+   "layer": "recloser",
+   "file": "Data2/Recloser_Bank_Clip.shp",
+   "records": 331,
+   "geometry": "Point Z",
+   "crs": "WGS 84 (EPSG:4326)",
+   "companions": ".cpg .dbf .prj .sbn .sbx .shp .shx .xml"
+  }
+ },
+ "joins": [
+  {
+   "join": "Customer.premise_nu -> matched_upstream premise",
+   "matched": 117595,
+   "total": 117642,
+   "rate": "99.96%",
+   "note": "direct key"
+  },
+  {
+   "join": "matched_upstream premise -> Customer.premise_nu",
+   "matched": 117595,
+   "total": 117599,
+   "rate": "100.00%",
+   "note": "direct key"
+  },
+  {
+   "join": "Customer.aep_xfmr_l -> Transformer.location_n",
+   "matched": 117615,
+   "total": 117642,
+   "rate": "99.98%",
+   "note": "location number"
+  },
+  {
+   "join": "upstream nearest transformer id -> Transformer.id",
+   "matched": 117597,
+   "total": 117599,
+   "rate": "100.00%",
+   "note": "feature id"
+  },
+  {
+   "join": "Customer.aep_xfmr_l == upstream nearest transformer location",
+   "matched": 117556,
+   "total": 117595,
+   "rate": "99.97%",
+   "note": "consistency of two sources"
+  },
+  {
+   "join": "upstream isolating-device ids -> Fuse/Recloser/Switch.id",
+   "matched": 6656,
+   "total": 7080,
+   "rate": "94.01%",
+   "note": "unmatched ids may sit outside the clip or in layers not supplied"
+  },
+  {
+   "join": "Customer.circuit_id == upstream breaker circuit",
+   "matched": 117588,
+   "total": 117595,
+   "rate": "99.99%",
+   "note": ""
+  },
+  {
+   "join": "ARCOS Circuit label -> Primary.aep_circui",
+   "matched": 1652,
+   "total": 1659,
+   "rate": "99.58%",
+   "note": "labels like TINKER / SERVICE CENTER have no GIS circuit"
+  },
+  {
+   "join": "ARCOS record -> same-type asset (spatial, capped)",
+   "matched": 1615,
+   "total": 1659,
+   "rate": "97.35%",
+   "note": "cap 15.0 m; secondary->transformer cap 60.0 m"
+  },
+  {
+   "join": "ARCOS record matched only via other-circuit asset (label fallback)",
+   "matched": 278,
+   "total": 1659,
+   "rate": "16.76%",
+   "note": "label disagrees with GIS circuit of nearest asset"
+  }
+ ],
+ "match_distance": [
+  {
+   "layer": "fuse",
+   "count": 277.0,
+   "mean": 0.09,
+   "std": 0.9,
+   "min": 0.0,
+   "p50_m": 0.0,
+   "p90_m": 0.0,
+   "max_m": 14.09
+  },
+  {
+   "layer": "pole",
+   "count": 353.0,
+   "mean": 0.03,
+   "std": 0.36,
+   "min": 0.0,
+   "p50_m": 0.0,
+   "p90_m": 0.0,
+   "max_m": 5.72
+  },
+  {
+   "layer": "primary",
+   "count": 700.0,
+   "mean": 0.04,
+   "std": 0.63,
+   "min": 0.0,
+   "p50_m": 0.0,
+   "p90_m": 0.0,
+   "max_m": 11.79
+  },
+  {
+   "layer": "recloser",
+   "count": 56.0,
+   "mean": 0.0,
+   "std": 0.0,
+   "min": 0.0,
+   "p50_m": 0.0,
+   "p90_m": 0.0,
+   "max_m": 0.0
+  },
+  {
+   "layer": "secondary",
+   "count": 142.0,
+   "mean": 25.22,
+   "std": 15.65,
+   "min": 7.46,
+   "p50_m": 20.14,
+   "p90_m": 50.1,
+   "max_m": 57.5
+  },
+  {
+   "layer": "switch",
+   "count": 16.0,
+   "mean": 0.0,
+   "std": 0.0,
+   "min": 0.0,
+   "p50_m": 0.0,
+   "p90_m": 0.0,
+   "max_m": 0.0
+  },
+  {
+   "layer": "transformer",
+   "count": 71.0,
+   "mean": 0.0,
+   "std": 0.0,
+   "min": 0.0,
+   "p50_m": 0.0,
+   "p90_m": 0.0,
+   "max_m": 0.0
+  }
+ ],
+ "circuits": [
+  {
+   "circuit_id": "0000018",
+   "circuit_name": "CIR18",
+   "premises": 893,
+   "premises_in_upstream_file": 893,
+   "premises_with_oriented_transformer": 893,
+   "transformers": 292,
+   "devices": 77,
+   "chain_ancestor_checks": 1563,
+   "chain_ancestor_consistent": 1563,
+   "chain_consistency": 1.0,
+   "damage_records": 118,
+   "damage_matched": 115,
+   "damage_on_network": 113,
+   "damage_label_disagrees": 0,
+   "damage_status_counts": {
+    "matched": 115,
+    "not_modelled_asset_type": 2,
+    "unmatched_beyond_cap": 1
+   },
+   "graph_nodes": 805,
+   "graph_main_nodes": 805,
+   "graph_gap_bridges": 3,
+   "graph_bridge_edges": 0,
+   "graph_dropped_components": [],
+   "graph_unbridged_components": [],
+   "root": "pt:587392:4115833",
+   "root_hierarchy_pairs": 344,
+   "root_consistent_pairs": 344,
+   "root_consistency": 1.0,
+   "root_candidate_roots": 175,
+   "overhead_km": 43.93,
+   "underground_km": 31.12
+  },
+  {
+   "circuit_id": "0000072",
+   "circuit_name": "CIR72",
+   "premises": 1563,
+   "premises_in_upstream_file": 1563,
+   "premises_with_oriented_transformer": 1563,
+   "transformers": 744,
+   "devices": 286,
+   "chain_ancestor_checks": 3672,
+   "chain_ancestor_consistent": 2821,
+   "chain_consistency": 0.7682,
+   "damage_records": 136,
+   "damage_matched": 133,
+   "damage_on_network": 133,
+   "damage_label_disagrees": 0,
+   "damage_status_counts": {
+    "matched": 133,
+    "not_modelled_asset_type": 2,
+    "unmatched_beyond_cap": 1
+   },
+   "graph_nodes": 2276,
+   "graph_main_nodes": 2276,
+   "graph_gap_bridges": 6,
+   "graph_bridge_edges": 0,
+   "graph_dropped_components": [],
+   "graph_unbridged_components": [],
+   "root": "pt:581547:4118613",
+   "root_hierarchy_pairs": 1001,
+   "root_consistent_pairs": 868,
+   "root_consistency": 0.8671,
+   "root_candidate_roots": 534,
+   "overhead_km": 148.24,
+   "underground_km": 71.12
+  },
+  {
+   "circuit_id": "0000036",
+   "circuit_name": "CIR36",
+   "premises": 261,
+   "premises_in_upstream_file": 261,
+   "premises_with_oriented_transformer": 260,
+   "transformers": 150,
+   "devices": 54,
+   "chain_ancestor_checks": 772,
+   "chain_ancestor_consistent": 772,
+   "chain_consistency": 1.0,
+   "damage_records": 15,
+   "damage_matched": 12,
+   "damage_on_network": 3,
+   "damage_label_disagrees": 0,
+   "damage_status_counts": {
+    "matched": 12,
+    "unmatched_beyond_cap": 2,
+    "missing_asset_type": 1
+   },
+   "graph_nodes": 589,
+   "graph_main_nodes": 585,
+   "graph_gap_bridges": 3,
+   "graph_bridge_edges": 4,
+   "graph_dropped_components": [
+    2,
+    2
+   ],
+   "graph_unbridged_components": [
+    2,
+    2
+   ],
+   "root": "pt:573181:4123103",
+   "root_hierarchy_pairs": 189,
+   "root_consistent_pairs": 189,
+   "root_consistency": 1.0,
+   "root_candidate_roots": 139,
+   "overhead_km": 41.85,
+   "underground_km": 6.06
+  },
+  {
+   "circuit_id": "0000010",
+   "circuit_name": "CIR10",
+   "premises": 472,
+   "premises_in_upstream_file": 472,
+   "premises_with_oriented_transformer": 0,
+   "transformers": 84,
+   "devices": 40,
+   "chain_ancestor_checks": 0,
+   "chain_ancestor_consistent": 0,
+   "chain_consistency": null,
+   "damage_records": 109,
+   "damage_matched": 107,
+   "damage_on_network": 105,
+   "damage_label_disagrees": 0,
+   "damage_status_counts": {
+    "matched": 107,
+    "unmatched_beyond_cap": 2
+   },
+   "graph_nodes": 1850,
+   "graph_main_nodes": 1850,
+   "graph_gap_bridges": 1,
+   "graph_bridge_edges": 0,
+   "graph_dropped_components": [],
+   "graph_unbridged_components": [],
+   "root": "pt:592136:4118027",
+   "root_hierarchy_pairs": 0,
+   "root_consistent_pairs": 0,
+   "root_consistency": null,
+   "root_candidate_roots": 458,
+   "overhead_km": 126.59,
+   "underground_km": 27.5
+  },
+  {
+   "circuit_id": "0000002",
+   "circuit_name": "CIR2",
+   "premises": 542,
+   "premises_in_upstream_file": 542,
+   "premises_with_oriented_transformer": 0,
+   "transformers": 189,
+   "devices": 95,
+   "chain_ancestor_checks": 0,
+   "chain_ancestor_consistent": 0,
+   "chain_consistency": null,
+   "damage_records": 170,
+   "damage_matched": 169,
+   "damage_on_network": 165,
+   "damage_label_disagrees": 0,
+   "damage_status_counts": {
+    "matched": 169,
+    "unmatched_beyond_cap": 1
+   },
+   "graph_nodes": 4364,
+   "graph_main_nodes": 4333,
+   "graph_gap_bridges": 23,
+   "graph_bridge_edges": 1,
+   "graph_dropped_components": [
+    14,
+    10,
+    5,
+    2
+   ],
+   "graph_unbridged_components": [
+    14,
+    10,
+    5,
+    2
+   ],
+   "root": "pt:582971:4113305",
+   "root_hierarchy_pairs": 0,
+   "root_consistent_pairs": 0,
+   "root_consistency": null,
+   "root_candidate_roots": 1001,
+   "overhead_km": 339.08,
+   "underground_km": 71.2
+  }
+ ],
+ "upstream": {
+  "rows": 117599,
+  "elements": 490090,
+  "malformed": 0,
+  "chain_length": {
+   "count": 117599.0,
+   "mean": 4.17,
+   "std": 1.35,
+   "min": 2.0,
+   "25%": 3.0,
+   "50%": 4.0,
+   "75%": 5.0,
+   "max": 13.0
+  }
+ }
+}

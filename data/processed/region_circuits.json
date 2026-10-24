@@ -1,0 +1,1053 @@
+{
+ "generated": "2026-10-24",
+ "event_window": [
+  "2025-02-12",
+  "2025-02-18"
+ ],
+ "circuits": [
+  {
+   "circuit_id": "0000001",
+   "premises": 238,
+   "overhead_km": 35.81,
+   "underground_km": 9.24,
+   "damage_records": 2,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.028
+  },
+  {
+   "circuit_id": "0000002",
+   "premises": 542,
+   "overhead_km": 236.83,
+   "underground_km": 43.71,
+   "damage_records": 240,
+   "event_damage_records": 210,
+   "event_damage_per_overhead_km": 0.887
+  },
+  {
+   "circuit_id": "0000003",
+   "premises": 833,
+   "overhead_km": 23.18,
+   "underground_km": 4.99,
+   "damage_records": 6,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000004",
+   "premises": 2652,
+   "overhead_km": 31.7,
+   "underground_km": 4.56,
+   "damage_records": 35,
+   "event_damage_records": 23,
+   "event_damage_per_overhead_km": 0.726
+  },
+  {
+   "circuit_id": "0000005",
+   "premises": 3527,
+   "overhead_km": 35.49,
+   "underground_km": 18.47,
+   "damage_records": 7,
+   "event_damage_records": 7,
+   "event_damage_per_overhead_km": 0.197
+  },
+  {
+   "circuit_id": "0000006",
+   "premises": 1171,
+   "overhead_km": 284.55,
+   "underground_km": 36.72,
+   "damage_records": 43,
+   "event_damage_records": 16,
+   "event_damage_per_overhead_km": 0.056
+  },
+  {
+   "circuit_id": "0000007",
+   "premises": 1596,
+   "overhead_km": 10.52,
+   "underground_km": 0.1,
+   "damage_records": 3,
+   "event_damage_records": 3,
+   "event_damage_per_overhead_km": 0.285
+  },
+  {
+   "circuit_id": "0000008",
+   "premises": 19,
+   "overhead_km": 22.77,
+   "underground_km": 18.84,
+   "damage_records": 6,
+   "event_damage_records": 5,
+   "event_damage_per_overhead_km": 0.22
+  },
+  {
+   "circuit_id": "0000009",
+   "premises": 1181,
+   "overhead_km": 5.76,
+   "underground_km": 1.18,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000010",
+   "premises": 472,
+   "overhead_km": 83.41,
+   "underground_km": 18.41,
+   "damage_records": 189,
+   "event_damage_records": 178,
+   "event_damage_per_overhead_km": 2.134
+  },
+  {
+   "circuit_id": "0000011",
+   "premises": 367,
+   "overhead_km": 7.72,
+   "underground_km": 0.79,
+   "damage_records": 2,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.13
+  },
+  {
+   "circuit_id": "0000012",
+   "premises": 0,
+   "overhead_km": 9.85,
+   "underground_km": 6.18,
+   "damage_records": 7,
+   "event_damage_records": 7,
+   "event_damage_per_overhead_km": 0.71
+  },
+  {
+   "circuit_id": "0000013",
+   "premises": 1028,
+   "overhead_km": 0.0,
+   "underground_km": 0.01,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": null
+  },
+  {
+   "circuit_id": "0000014",
+   "premises": 1239,
+   "overhead_km": 59.36,
+   "underground_km": 12.81,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000015",
+   "premises": 513,
+   "overhead_km": 39.72,
+   "underground_km": 6.81,
+   "damage_records": 22,
+   "event_damage_records": 12,
+   "event_damage_per_overhead_km": 0.302
+  },
+  {
+   "circuit_id": "0000016",
+   "premises": 1685,
+   "overhead_km": 8.18,
+   "underground_km": 1.78,
+   "damage_records": 3,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000017",
+   "premises": 4,
+   "overhead_km": 3.84,
+   "underground_km": 2.11,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000018",
+   "premises": 893,
+   "overhead_km": 29.53,
+   "underground_km": 22.48,
+   "damage_records": 124,
+   "event_damage_records": 109,
+   "event_damage_per_overhead_km": 3.691
+  },
+  {
+   "circuit_id": "0000019",
+   "premises": 131,
+   "overhead_km": 1.54,
+   "underground_km": 5.1,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000020",
+   "premises": 922,
+   "overhead_km": 19.09,
+   "underground_km": 7.85,
+   "damage_records": 5,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000021",
+   "premises": 2176,
+   "overhead_km": 33.77,
+   "underground_km": 15.55,
+   "damage_records": 10,
+   "event_damage_records": 4,
+   "event_damage_per_overhead_km": 0.118
+  },
+  {
+   "circuit_id": "0000022",
+   "premises": 1484,
+   "overhead_km": 8.15,
+   "underground_km": 26.91,
+   "damage_records": 4,
+   "event_damage_records": 4,
+   "event_damage_per_overhead_km": 0.491
+  },
+  {
+   "circuit_id": "0000023",
+   "premises": 238,
+   "overhead_km": 4.87,
+   "underground_km": 3.84,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000024",
+   "premises": 1452,
+   "overhead_km": 8.24,
+   "underground_km": 13.43,
+   "damage_records": 17,
+   "event_damage_records": 10,
+   "event_damage_per_overhead_km": 1.214
+  },
+  {
+   "circuit_id": "0000025",
+   "premises": 1271,
+   "overhead_km": 25.38,
+   "underground_km": 0.78,
+   "damage_records": 7,
+   "event_damage_records": 5,
+   "event_damage_per_overhead_km": 0.197
+  },
+  {
+   "circuit_id": "0000026",
+   "premises": 2006,
+   "overhead_km": 39.45,
+   "underground_km": 32.49,
+   "damage_records": 35,
+   "event_damage_records": 32,
+   "event_damage_per_overhead_km": 0.811
+  },
+  {
+   "circuit_id": "0000027",
+   "premises": 1166,
+   "overhead_km": 70.84,
+   "underground_km": 14.0,
+   "damage_records": 39,
+   "event_damage_records": 34,
+   "event_damage_per_overhead_km": 0.48
+  },
+  {
+   "circuit_id": "0000028",
+   "premises": 1189,
+   "overhead_km": 12.03,
+   "underground_km": 3.66,
+   "damage_records": 2,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.083
+  },
+  {
+   "circuit_id": "0000029",
+   "premises": 1089,
+   "overhead_km": 9.65,
+   "underground_km": 3.0,
+   "damage_records": 4,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000030",
+   "premises": 1065,
+   "overhead_km": 12.77,
+   "underground_km": 0.28,
+   "damage_records": 1,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000031",
+   "premises": 1407,
+   "overhead_km": 47.85,
+   "underground_km": 23.69,
+   "damage_records": 26,
+   "event_damage_records": 22,
+   "event_damage_per_overhead_km": 0.46
+  },
+  {
+   "circuit_id": "0000032",
+   "premises": 586,
+   "overhead_km": 5.85,
+   "underground_km": 4.38,
+   "damage_records": 3,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000033",
+   "premises": 439,
+   "overhead_km": 5.72,
+   "underground_km": 0.05,
+   "damage_records": 1,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000034",
+   "premises": 625,
+   "overhead_km": 9.27,
+   "underground_km": 2.92,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000035",
+   "premises": 1347,
+   "overhead_km": 10.32,
+   "underground_km": 6.62,
+   "damage_records": 1,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.097
+  },
+  {
+   "circuit_id": "0000036",
+   "premises": 261,
+   "overhead_km": 28.9,
+   "underground_km": 4.34,
+   "damage_records": 92,
+   "event_damage_records": 61,
+   "event_damage_per_overhead_km": 2.111
+  },
+  {
+   "circuit_id": "0000037",
+   "premises": 1367,
+   "overhead_km": 23.48,
+   "underground_km": 28.11,
+   "damage_records": 1,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000038",
+   "premises": 1849,
+   "overhead_km": 21.72,
+   "underground_km": 1.87,
+   "damage_records": 7,
+   "event_damage_records": 7,
+   "event_damage_per_overhead_km": 0.322
+  },
+  {
+   "circuit_id": "0000039",
+   "premises": 1541,
+   "overhead_km": 101.58,
+   "underground_km": 23.2,
+   "damage_records": 13,
+   "event_damage_records": 8,
+   "event_damage_per_overhead_km": 0.079
+  },
+  {
+   "circuit_id": "0000040",
+   "premises": 1477,
+   "overhead_km": 94.69,
+   "underground_km": 25.58,
+   "damage_records": 8,
+   "event_damage_records": 3,
+   "event_damage_per_overhead_km": 0.032
+  },
+  {
+   "circuit_id": "0000041",
+   "premises": 1939,
+   "overhead_km": 33.35,
+   "underground_km": 1.98,
+   "damage_records": 10,
+   "event_damage_records": 6,
+   "event_damage_per_overhead_km": 0.18
+  },
+  {
+   "circuit_id": "0000042",
+   "premises": 1338,
+   "overhead_km": 17.43,
+   "underground_km": 12.02,
+   "damage_records": 2,
+   "event_damage_records": 2,
+   "event_damage_per_overhead_km": 0.115
+  },
+  {
+   "circuit_id": "0000043",
+   "premises": 1800,
+   "overhead_km": 31.25,
+   "underground_km": 27.64,
+   "damage_records": 20,
+   "event_damage_records": 17,
+   "event_damage_per_overhead_km": 0.544
+  },
+  {
+   "circuit_id": "0000044",
+   "premises": 811,
+   "overhead_km": 4.46,
+   "underground_km": 20.25,
+   "damage_records": 1,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.224
+  },
+  {
+   "circuit_id": "0000045",
+   "premises": 1583,
+   "overhead_km": 19.6,
+   "underground_km": 0.71,
+   "damage_records": 3,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000046",
+   "premises": 287,
+   "overhead_km": 3.95,
+   "underground_km": 0.0,
+   "damage_records": 1,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000047",
+   "premises": 3470,
+   "overhead_km": 38.59,
+   "underground_km": 35.34,
+   "damage_records": 4,
+   "event_damage_records": 2,
+   "event_damage_per_overhead_km": 0.052
+  },
+  {
+   "circuit_id": "0000048",
+   "premises": 1327,
+   "overhead_km": 29.96,
+   "underground_km": 6.69,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000049",
+   "premises": 1206,
+   "overhead_km": 7.93,
+   "underground_km": 1.2,
+   "damage_records": 5,
+   "event_damage_records": 2,
+   "event_damage_per_overhead_km": 0.252
+  },
+  {
+   "circuit_id": "0000050",
+   "premises": 0,
+   "overhead_km": 0.53,
+   "underground_km": 0.03,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000051",
+   "premises": 1452,
+   "overhead_km": 18.63,
+   "underground_km": 8.07,
+   "damage_records": 4,
+   "event_damage_records": 4,
+   "event_damage_per_overhead_km": 0.215
+  },
+  {
+   "circuit_id": "0000052",
+   "premises": 1004,
+   "overhead_km": 35.5,
+   "underground_km": 11.47,
+   "damage_records": 18,
+   "event_damage_records": 10,
+   "event_damage_per_overhead_km": 0.282
+  },
+  {
+   "circuit_id": "0000053",
+   "premises": 998,
+   "overhead_km": 29.43,
+   "underground_km": 16.24,
+   "damage_records": 6,
+   "event_damage_records": 2,
+   "event_damage_per_overhead_km": 0.068
+  },
+  {
+   "circuit_id": "0000054",
+   "premises": 685,
+   "overhead_km": 16.01,
+   "underground_km": 0.15,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000055",
+   "premises": 299,
+   "overhead_km": 0.8,
+   "underground_km": 1.82,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000056",
+   "premises": 85,
+   "overhead_km": 5.25,
+   "underground_km": 1.53,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000057",
+   "premises": 888,
+   "overhead_km": 12.82,
+   "underground_km": 5.41,
+   "damage_records": 1,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.078
+  },
+  {
+   "circuit_id": "0000058",
+   "premises": 977,
+   "overhead_km": 16.23,
+   "underground_km": 6.65,
+   "damage_records": 6,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000059",
+   "premises": 0,
+   "overhead_km": 0.0,
+   "underground_km": 0.04,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": null
+  },
+  {
+   "circuit_id": "0000060",
+   "premises": 1233,
+   "overhead_km": 155.59,
+   "underground_km": 24.3,
+   "damage_records": 25,
+   "event_damage_records": 16,
+   "event_damage_per_overhead_km": 0.103
+  },
+  {
+   "circuit_id": "0000061",
+   "premises": 1551,
+   "overhead_km": 56.81,
+   "underground_km": 24.42,
+   "damage_records": 2,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.018
+  },
+  {
+   "circuit_id": "0000062",
+   "premises": 875,
+   "overhead_km": 38.47,
+   "underground_km": 4.36,
+   "damage_records": 42,
+   "event_damage_records": 42,
+   "event_damage_per_overhead_km": 1.092
+  },
+  {
+   "circuit_id": "0000063",
+   "premises": 1171,
+   "overhead_km": 13.9,
+   "underground_km": 3.5,
+   "damage_records": 3,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.072
+  },
+  {
+   "circuit_id": "0000064",
+   "premises": 1584,
+   "overhead_km": 24.88,
+   "underground_km": 3.29,
+   "damage_records": 11,
+   "event_damage_records": 8,
+   "event_damage_per_overhead_km": 0.322
+  },
+  {
+   "circuit_id": "0000065",
+   "premises": 1606,
+   "overhead_km": 23.7,
+   "underground_km": 1.81,
+   "damage_records": 6,
+   "event_damage_records": 5,
+   "event_damage_per_overhead_km": 0.211
+  },
+  {
+   "circuit_id": "0000066",
+   "premises": 788,
+   "overhead_km": 28.72,
+   "underground_km": 8.07,
+   "damage_records": 29,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000067",
+   "premises": 120,
+   "overhead_km": 1.5,
+   "underground_km": 0.26,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000068",
+   "premises": 775,
+   "overhead_km": 48.04,
+   "underground_km": 18.24,
+   "damage_records": 2,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000069",
+   "premises": 1232,
+   "overhead_km": 24.1,
+   "underground_km": 7.38,
+   "damage_records": 22,
+   "event_damage_records": 16,
+   "event_damage_per_overhead_km": 0.664
+  },
+  {
+   "circuit_id": "0000070",
+   "premises": 708,
+   "overhead_km": 0.0,
+   "underground_km": 0.0,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": null
+  },
+  {
+   "circuit_id": "0000071",
+   "premises": 3232,
+   "overhead_km": 45.47,
+   "underground_km": 17.46,
+   "damage_records": 15,
+   "event_damage_records": 5,
+   "event_damage_per_overhead_km": 0.11
+  },
+  {
+   "circuit_id": "0000072",
+   "premises": 1563,
+   "overhead_km": 96.71,
+   "underground_km": 49.13,
+   "damage_records": 140,
+   "event_damage_records": 123,
+   "event_damage_per_overhead_km": 1.272
+  },
+  {
+   "circuit_id": "0000073",
+   "premises": 1825,
+   "overhead_km": 38.76,
+   "underground_km": 32.67,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000074",
+   "premises": 6,
+   "overhead_km": 0.0,
+   "underground_km": 2.32,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": null
+  },
+  {
+   "circuit_id": "0000075",
+   "premises": 110,
+   "overhead_km": 2.64,
+   "underground_km": 1.5,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000076",
+   "premises": 81,
+   "overhead_km": 4.91,
+   "underground_km": 0.13,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000077",
+   "premises": 0,
+   "overhead_km": 0.01,
+   "underground_km": 0.0,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": null
+  },
+  {
+   "circuit_id": "0000078",
+   "premises": 1151,
+   "overhead_km": 21.19,
+   "underground_km": 26.23,
+   "damage_records": 34,
+   "event_damage_records": 31,
+   "event_damage_per_overhead_km": 1.463
+  },
+  {
+   "circuit_id": "0000079",
+   "premises": 781,
+   "overhead_km": 9.14,
+   "underground_km": 2.77,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000080",
+   "premises": 1431,
+   "overhead_km": 17.58,
+   "underground_km": 1.38,
+   "damage_records": 7,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.057
+  },
+  {
+   "circuit_id": "0000081",
+   "premises": 1437,
+   "overhead_km": 17.05,
+   "underground_km": 3.33,
+   "damage_records": 12,
+   "event_damage_records": 11,
+   "event_damage_per_overhead_km": 0.645
+  },
+  {
+   "circuit_id": "0000082",
+   "premises": 131,
+   "overhead_km": 3.7,
+   "underground_km": 0.55,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000083",
+   "premises": 1631,
+   "overhead_km": 15.73,
+   "underground_km": 1.38,
+   "damage_records": 1,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000084",
+   "premises": 1447,
+   "overhead_km": 13.9,
+   "underground_km": 0.2,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000085",
+   "premises": 623,
+   "overhead_km": 4.71,
+   "underground_km": 0.51,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000086",
+   "premises": 330,
+   "overhead_km": 7.66,
+   "underground_km": 3.16,
+   "damage_records": 1,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.13
+  },
+  {
+   "circuit_id": "0000087",
+   "premises": 1029,
+   "overhead_km": 8.98,
+   "underground_km": 0.94,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000088",
+   "premises": 1377,
+   "overhead_km": 7.18,
+   "underground_km": 7.68,
+   "damage_records": 12,
+   "event_damage_records": 4,
+   "event_damage_per_overhead_km": 0.557
+  },
+  {
+   "circuit_id": "0000089",
+   "premises": 9,
+   "overhead_km": 0.91,
+   "underground_km": 0.03,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000090",
+   "premises": 1351,
+   "overhead_km": 18.29,
+   "underground_km": 25.66,
+   "damage_records": 18,
+   "event_damage_records": 7,
+   "event_damage_per_overhead_km": 0.383
+  },
+  {
+   "circuit_id": "0000091",
+   "premises": 7,
+   "overhead_km": 8.57,
+   "underground_km": 0.29,
+   "damage_records": 5,
+   "event_damage_records": 5,
+   "event_damage_per_overhead_km": 0.583
+  },
+  {
+   "circuit_id": "0000092",
+   "premises": 1352,
+   "overhead_km": 15.22,
+   "underground_km": 0.11,
+   "damage_records": 13,
+   "event_damage_records": 12,
+   "event_damage_per_overhead_km": 0.789
+  },
+  {
+   "circuit_id": "0000093",
+   "premises": 533,
+   "overhead_km": 6.52,
+   "underground_km": 6.48,
+   "damage_records": 4,
+   "event_damage_records": 2,
+   "event_damage_per_overhead_km": 0.307
+  },
+  {
+   "circuit_id": "0000094",
+   "premises": 207,
+   "overhead_km": 4.47,
+   "underground_km": 1.16,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000095",
+   "premises": 580,
+   "overhead_km": 5.37,
+   "underground_km": 6.02,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000096",
+   "premises": 0,
+   "overhead_km": 0.0,
+   "underground_km": 0.36,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": null
+  },
+  {
+   "circuit_id": "0000097",
+   "premises": 896,
+   "overhead_km": 11.74,
+   "underground_km": 2.31,
+   "damage_records": 5,
+   "event_damage_records": 2,
+   "event_damage_per_overhead_km": 0.17
+  },
+  {
+   "circuit_id": "0000098",
+   "premises": 349,
+   "overhead_km": 8.87,
+   "underground_km": 6.29,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000099",
+   "premises": 727,
+   "overhead_km": 38.48,
+   "underground_km": 10.21,
+   "damage_records": 8,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.026
+  },
+  {
+   "circuit_id": "0000100",
+   "premises": 996,
+   "overhead_km": 9.22,
+   "underground_km": 6.03,
+   "damage_records": 5,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000101",
+   "premises": 697,
+   "overhead_km": 4.67,
+   "underground_km": 6.27,
+   "damage_records": 1,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000102",
+   "premises": 892,
+   "overhead_km": 11.31,
+   "underground_km": 0.61,
+   "damage_records": 1,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000103",
+   "premises": 305,
+   "overhead_km": 29.58,
+   "underground_km": 5.66,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000104",
+   "premises": 1601,
+   "overhead_km": 21.93,
+   "underground_km": 2.29,
+   "damage_records": 5,
+   "event_damage_records": 3,
+   "event_damage_per_overhead_km": 0.137
+  },
+  {
+   "circuit_id": "0000105",
+   "premises": 1517,
+   "overhead_km": 11.13,
+   "underground_km": 1.22,
+   "damage_records": 1,
+   "event_damage_records": 1,
+   "event_damage_per_overhead_km": 0.09
+  },
+  {
+   "circuit_id": "0000106",
+   "premises": 1204,
+   "overhead_km": 9.27,
+   "underground_km": 0.19,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000107",
+   "premises": 1958,
+   "overhead_km": 28.14,
+   "underground_km": 11.03,
+   "damage_records": 11,
+   "event_damage_records": 11,
+   "event_damage_per_overhead_km": 0.391
+  },
+  {
+   "circuit_id": "0000108",
+   "premises": 1495,
+   "overhead_km": 20.87,
+   "underground_km": 1.01,
+   "damage_records": 6,
+   "event_damage_records": 4,
+   "event_damage_per_overhead_km": 0.192
+  },
+  {
+   "circuit_id": "0000109",
+   "premises": 1806,
+   "overhead_km": 26.49,
+   "underground_km": 0.68,
+   "damage_records": 13,
+   "event_damage_records": 10,
+   "event_damage_per_overhead_km": 0.378
+  },
+  {
+   "circuit_id": "0000110",
+   "premises": 1062,
+   "overhead_km": 18.86,
+   "underground_km": 8.57,
+   "damage_records": 8,
+   "event_damage_records": 2,
+   "event_damage_per_overhead_km": 0.106
+  },
+  {
+   "circuit_id": "0000111",
+   "premises": 1089,
+   "overhead_km": 15.76,
+   "underground_km": 0.09,
+   "damage_records": 6,
+   "event_damage_records": 4,
+   "event_damage_per_overhead_km": 0.254
+  },
+  {
+   "circuit_id": "0000112",
+   "premises": 822,
+   "overhead_km": 10.17,
+   "underground_km": 0.49,
+   "damage_records": 1,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000113",
+   "premises": 7,
+   "overhead_km": 1.46,
+   "underground_km": 0.89,
+   "damage_records": 0,
+   "event_damage_records": 0,
+   "event_damage_per_overhead_km": 0.0
+  },
+  {
+   "circuit_id": "0000114",
+   "premises": 1890,
+   "overhead_km": 113.46,
+   "underground_km": 42.04,
+   "damage_records": 105,
+   "event_damage_records": 92,
+   "event_damage_per_overhead_km": 0.811
+  },
+  {
+   "circuit_id": "0000115",
+   "premises": 1265,
+   "overhead_km": 20.29,
+   "underground_km": 3.67,
+   "damage_records": 19,
+   "event_damage_records": 15,
+   "event_damage_per_overhead_km": 0.739
+  },
+  {
+   "circuit_id": "2712606",
+   "premises": 0,
+   "overhead_km": 8.72,
+   "underground_km": 4.49,
+   "damage_records": 7,
+   "event_damage_records": 7,
+   "event_damage_per_overhead_km": 0.803
+  }
+ ]
+}
