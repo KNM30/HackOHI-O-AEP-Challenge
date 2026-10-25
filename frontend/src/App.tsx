@@ -3,6 +3,7 @@ import { api, isAbort } from "./api";
 import { commsReducer, initialComms, lastNotified } from "./commsState";
 import { AlertsCard, LatestAlert } from "./components/AlertsCard";
 import { AssistantPanel } from "./components/AssistantPanel";
+import { AuditCard } from "./components/AuditCard";
 import { FactsPanel } from "./components/FactsPanel";
 import { GuidanceCard, TopActions } from "./components/GuidanceCard";
 import { JourneyTabs, type TabDef, type TabId } from "./components/JourneyTabs";
@@ -528,6 +529,7 @@ export default function App() {
     { id: "overview", label: "Overview", panel: overview },
     { id: "explore", label: "Explore scenarios", panel: explore },
     { id: "ask", label: "Ask", panel: ask },
+    { id: "audit", label: "Audit trail", panel: <AuditCard active={tab === "audit"} /> },
   ];
 
   return (

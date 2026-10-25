@@ -202,3 +202,29 @@ These delay when a job can start. A crew can work on other jobs while one job wa
 - **Mapped protective devices missing from every upstream chain** are skipped (11 on CIR18). This is an approximation,
   not proof that the next device up is physically correct. Any job whose fault walk passed over such a device is marked
   `protection_uncertain`, a warning is shown, and the premise's confidence is lowered.
+
+## 7. Check against the real repair pace (replay only)
+
+The ARCOS records carry a repaired date. For the historical replay, the result includes `backtest`: the share of the
+storm's records closed on each day after its first report, and the **crews this model needs to match that pace**. The
+real crew count is not in the data, so this is an implied crew count, a plausibility check on the labor and scheduling
+assumptions, not an independent validation of restoration times. The idea comes from a teammate's version, which fits
+a territory-wide crew count the same way.
+
+- Records closed more than 30 days after the first report are treated as paperwork, not field repair, and left out
+  (`labor_config.BACKTEST_CLOSURE_LAG_DAYS`).
+- "Finished" is the day by which 95% of the remaining records were closed. Dates are whole days and count from the
+  storm's first report, while the model counts from the start of the response, so the comparison is accurate to about
+  a day.
+- The implied range uses the optimistic and conservative bounds with the selected crew size and working hours. If
+  some work is not modeled, the implied crews are minimums.
+
+Observed on the real data, with 4-person crews and 16 working hours per day:
+
+| Circuit | Records used | Finished by (day) | Implied crews, re-stringing assumption on | Workbook data only |
+|---|---:|---:|---|---|
+| 18 (13-17 Feb 2025) | 103 | 4 | 3 to 6 | 3 to 4 |
+| 109 (17-18 Feb 2025) | 8 | 1 | 1 to 2 | 1 to 2 |
+
+A few crews for one circuit of about 900 premises over four days is plausible. It does not show that individual
+repair durations are right.

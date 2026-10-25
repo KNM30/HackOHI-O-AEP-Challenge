@@ -21,6 +21,12 @@ def latlon(lonlat) -> s.LatLon | None:
     return s.LatLon(lat=lonlat[1], lon=lonlat[0]) if lonlat else None
 
 
+def approx_latlon(lonlat) -> s.LatLon | None:
+    """Rounded point (~100 m) for anything that could identify a home."""
+    r = DISPLAY_ROUND_DECIMALS
+    return s.LatLon(lat=round(lonlat[1], r), lon=round(lonlat[0], r)) if lonlat else None
+
+
 def bucket(n: int | None) -> str:
     if n is None:
         return "unknown"
@@ -75,11 +81,10 @@ def historical_damage(net: CircuitNetwork, premise: dict) -> s.HistoricalDamageS
         else:
             continue
         counts[kind] += 1
-        r = DISPLAY_ROUND_DECIMALS
         records.append(s.HistoricalDamage(
             id=d["public_id"], report_date=d["report_date"], asset_type=d["asset_type"],
             damage_type=d["damage_type"], access_issue=d["access_issue"], repaired=d["repaired"], relation=kind,
-            approx_location=s.LatLon(lat=round(d["lonlat"][1], r), lon=round(d["lonlat"][0], r))))
+            approx_location=approx_latlon(d["lonlat"])))
     records.sort(key=lambda x: (x.report_date or ""), reverse=True)
     by_date = Counter((x.report_date or "unknown")[:7] for x in records)
     return s.HistoricalDamageSummary(
@@ -120,7 +125,7 @@ def premise_context(net: CircuitNetwork, p: dict) -> s.PremiseContext:
     pending = "Not calculated yet - this part of the assistant is still being built."
     return s.PremiseContext(
         premise=s.PremiseInfo(id=p["public_id"], circuit_id=net.circuit_id, circuit_label=net.label, service_type=p["service_type"],
-                              meters=p["meters"], location=latlon(p["lonlat"])),
+                              meters=p["meters"], location=approx_latlon(p["lonlat"])),
         transformer=s.TransformerInfo(id=tr["public_id"], mounting=tr.get("mounting"), structure=tr.get("structure"),
                                       premises_served=tr["premise_count"]) if tr else None,
         upstream_chain=chain,

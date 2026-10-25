@@ -225,3 +225,47 @@ def test_restring_toggle_on_real_data():
     assert off["selected"]["range_kind"] == "lower_bound_only" and off["overall"]["complete"] is False
     assert on["selected"]["workbook_only_lower_h"] == off["selected"]["lower_h"]
     assert on["params"]["restring_assumption"] is True and off["params"]["restring_assumption"] is False
+
+
+# ------------------------------------------------------------------ verification pass: privacy and alert wording
+def test_premise_location_is_rounded():
+    from app.config import DISPLAY_ROUND_DECIMALS
+    loc = client.get("/api/premises/PRM-00770FFC").json()["premise"]["location"]
+    for v in (loc["lat"], loc["lon"]):
+        assert v == round(v, DISPLAY_ROUND_DECIMALS)
+
+
+def test_alert_answer_does_not_state_unmet_rules_as_facts():
+    body = {"briefing": {"premise_id": "PRM-00770FFC", "severity": "severe"}, "question": "Do I qualify for outage alerts?"}
+    a = client.post("/api/assistant", json=body).json()
+    assert a["intent"] == "alerts"
+    rules = a["answer"]["assumptions"]
+    assert rules and all(r.startswith(("Met now: ", "Not met: ")) for r in rules)
+    assert any(r.startswith("Not met: ") and "outage" in r.lower() and "confirmed" in r.lower() for r in rules)
+
+
+# ------------------------------------------------------------------ teammate merge: replay pace check
+def test_replay_backtest_reports_implied_crews_on_real_data():
+    r = _sim("PRM-00770FFC", "historical_replay", crew={"crews": 2}, circuit="0000018").json()["restoration"]
+    b = r["backtest"]
+    assert b["records_used"] > 50 and b["observed_pace"][-1]["share_repaired"] == 1.0
+    lo, hi = b["implied_crews_optimistic"], b["implied_crews_conservative"]
+    assert lo is not None and hi is not None and 1 <= lo <= hi <= 20
+    assert "not an independent validation" in b["note"] or "rather than an independent validation" in b["note"]
+    # the pace check is diagnostic: it never changes the estimate the customer sees
+    assert r["selected"] == _sim("PRM-00770FFC", "historical_replay", crew={"crews": 2},
+                                 circuit="0000018").json()["restoration"]["selected"]
+
+
+def test_backtest_only_for_replay():
+    r = _sim("PRM-00770FFC", "local_branch", circuit="0000018").json()["restoration"]
+    assert r["backtest"] is None
+
+
+def test_changed_answer_never_turns_an_at_least_estimate_into_a_latest_time():
+    previous = {"snapshot_version": "SNP-OLD", "severity": "moderate", "range_kind": "lower_bound_only",
+                "lower_h": 1.73, "upper_h": 6.08}
+    a = client.post("/api/assistant", json={"briefing": {"premise_id": "PRM-00770FFC"},
+                                            "question": "What changed?", "previous": previous}).json()
+    text = " ".join(a["answer"]["estimates"])
+    assert "at least about 2 h" in text and "6 h" not in text and "latest" not in text

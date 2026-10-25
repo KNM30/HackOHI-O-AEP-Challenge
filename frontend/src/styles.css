@@ -1153,6 +1153,10 @@ ol.recs {
   margin: 0.4rem 0;
   font-size: 0.95rem;
 }
+.chance {
+  margin: 0.2rem 0 0.4rem;
+  font-size: 0.95rem;
+}
 .optin {
   align-items: center;
   gap: 0.3rem 1rem;

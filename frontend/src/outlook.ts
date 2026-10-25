@@ -25,7 +25,7 @@ export interface Outlook {
   text: string;
   /** The qualification that must stay next to the number (conditional, incomplete, unavailable...). */
   qualifier: string | null;
-  confidence: "moderate" | "low" | null;
+  confidence: "high" | "moderate" | "low" | null;
   stale: boolean;
 }
 

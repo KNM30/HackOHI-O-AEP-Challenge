@@ -6,6 +6,15 @@ import json
 
 from . import alert_config as cfg
 from . import schemas as s
+from .risk import pct
+
+
+def _risk_basis(risk: s.RiskResult) -> str:
+    """How the band was set, in words: the fitted model's chance, or the heuristic band."""
+    if risk.probability is not None:
+        return (f"(about {pct(risk.probability)}, range {pct(risk.probability_low)} to {pct(risk.probability_high)}; "
+                "a model estimate).")
+    return "(a heuristic band, not a probability)."
 
 
 def _fmt(h: float | None) -> str:
@@ -139,8 +148,8 @@ def evaluate(premise_alias: str, risk: s.RiskResult, impact: s.ScenarioResult | 
         dedupe_key=_key("pre_storm", premise_alias, risk.severity, band),
         text=_compose("Storm preparation alert",
                       f"A {risk.severity_label.lower()} could affect power at your home ({premise_alias}). "
-                      f"Our prototype rates your outage risk as {band or 'unknown'} (a heuristic band, not a "
-                      f"probability). No outage has happened.",
+                      f"Our prototype rates your outage risk as {band or 'unknown'} " + _risk_basis(risk) +
+                      " No outage has happened.",
                       None, todo_default,
                       "only if the scenario changes or an outage is (simulated as) confirmed.")))
 

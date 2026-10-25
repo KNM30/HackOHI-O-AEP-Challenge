@@ -188,7 +188,13 @@ def test_messages_carry_label_estimate_next_steps_and_no_internals():
         t = m["text"]
         assert t.startswith("[SIMULATED") and "prototype" in t.splitlines()[-1]
         assert "What to do:" in t and "Next update:" in t
-        assert not re.search(r"\b(JOB|DEV|LOC|XFR|DMG)-|Labor time|CNC!|%", t)
+        assert not re.search(r"\b(JOB|DEV|LOC|XFR|DMG)-|Labor time|CNC!", t)
+    # the only percentages are the calculated pre-storm chance and its range
+    r = client.get(f"/api/premises/{DEMO}/risk", params={"severity": "severe"}).json()
+    allowed = {f"{round(100 * r[k])}%" for k in ("probability", "probability_low", "probability_high")}
+    for m in b["alerts"]["messages"]:
+        found = set(re.findall(r"\d+%", m["text"]))
+        assert found <= allowed and (not found or m["type"] == "pre_storm")
     t = msg(b, "outage_confirmed")["text"]
     assert "at least" in t and "may take longer" in t  # incomplete stays incomplete
 
@@ -215,7 +221,8 @@ def test_missing_provider_gives_labelled_fallback(monkeypatch):
     monkeypatch.setattr(assistant, "AI_PROVIDER", "none")
     a = ask("Why is my risk high?", severity="severe")
     assert a["mode"] == "fallback" and "No AI provider" in a["fallback_reason"]
-    assert a["answer"]["estimates"] and "not a probability" in a["answer"]["estimates"][0]
+    est = a["answer"]["estimates"][0]
+    assert "model estimate of about" in est and "90% range" in est  # the fitted chance, quoted with its range
 
 
 class FakeClient:

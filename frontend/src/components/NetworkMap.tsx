@@ -214,7 +214,7 @@ export function NetworkMap({ layers, context, premises, onSelect, scenario, show
             pathOptions={{ color: "#111", fillColor: "#ffd43b", fillOpacity: 1, weight: 2 }}
           >
             <Tooltip permanent direction="top">
-              Your home
+              Your home (approximate)
             </Tooltip>
           </CircleMarker>
         </Pane>

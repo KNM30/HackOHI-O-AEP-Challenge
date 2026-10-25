@@ -15,7 +15,7 @@ import copy
 
 import pytest
 
-from app import risk, risk_config
+from app import data_store, risk, risk_config
 from app.network import CircuitNetwork
 from app.scenarios import Loc, Scenario, evaluate
 
@@ -61,17 +61,20 @@ def run(net, *locs, pid="P-C"):
     return evaluate(net, net.premises[pid], scen, list(locs))
 
 
-# ------------------------------------------------------------------ risk
+# ------------------------------------------------------------------ risk (heuristic fallback: model=None)
+SEVERITIES = list(risk_config.SEVERITY)  # ordered from minor to severe
+
+
 def test_severity_factors_increase():
-    factors = [risk_config.SEVERITY[k]["factor"] for k in ("minor", "moderate", "severe")]
-    assert factors == sorted(factors) and len(set(factors)) == 3
+    factors = [risk_config.SEVERITY[k]["factor"] for k in SEVERITIES]
+    assert factors == sorted(factors) and len(set(factors)) == len(SEVERITIES)
 
 
 def test_higher_severity_never_lowers_risk():
     net = build()
     order = {"low": 0, "moderate": 1, "high": 2}
     for p in net.premises.values():
-        res = [risk.assess(net, p, sev, 0) for sev in ("minor", "moderate", "severe")]
+        res = [risk.assess(net, p, sev, 0, model=None) for sev in SEVERITIES]
         scores = [r.score for r in res]
         assert scores == sorted(scores)
         assert [order[r.band] for r in res] == sorted(order[r.band] for r in res)
@@ -80,20 +83,20 @@ def test_higher_severity_never_lowers_risk():
 def test_identical_features_give_identical_results():
     twin = premise("P-E2", "E", ["REC"])
     net = build(extra_premises=[twin])
-    a = risk.assess(net, net.premises["P-E"], "moderate", 0)
-    b = risk.assess(net, net.premises["P-E2"], "moderate", 0)
+    a = risk.assess(net, net.premises["P-E"], "moderate", 0, model=None)
+    b = risk.assess(net, net.premises["P-E2"], "moderate", 0, model=None)
     assert (a.score, a.band, a.confidence.points) == (b.score, b.band, b.confidence.points)
 
 
 def test_score_is_never_a_probability_and_confidence_is_separate():
     net = build()
-    r = risk.assess(net, net.premises["P-C"], "severe", 0)
-    assert r.kind == "pre_storm_risk" and "Not a probability" in r.score_note
+    r = risk.assess(net, net.premises["P-C"], "severe", 0, model=None)
+    assert r.kind == "pre_storm_risk" and r.method == "heuristic" and "Not a probability" in r.score_note
     assert 0 <= r.score <= 100 and r.confidence.level in ("moderate", "low")
     # a premise-level data flag lowers confidence but not the score
     flagged = build(extra_premises=[premise("P-F", "C", ["F1", "REC"], flags=["customer_layer_transformer_differs"])])
-    rf = risk.assess(flagged, flagged.premises["P-F"], "severe", 0)
-    rc = risk.assess(flagged, flagged.premises["P-C"], "severe", 0)
+    rf = risk.assess(flagged, flagged.premises["P-F"], "severe", 0, model=None)
+    rc = risk.assess(flagged, flagged.premises["P-C"], "severe", 0, model=None)
     assert rf.score == rc.score and rf.confidence.points < rc.confidence.points
 
 
@@ -109,7 +112,61 @@ def test_approximate_history_lowers_confidence():
     exact = build(damage=[rec])
     approx = build(damage=[dict(rec, label_fallback=True)])
     pe, pa = exact.premises["P-C"], approx.premises["P-C"]
-    assert risk.assess(exact, pe, "moderate", 0).confidence.points > risk.assess(approx, pa, "moderate", 0).confidence.points
+    for model in (None, data_store.risk_model()):
+        assert risk.assess(exact, pe, "moderate", 0, model=model).confidence.points >             risk.assess(approx, pa, "moderate", 0, model=model).confidence.points
+
+
+# ------------------------------------------------------------------ risk (fitted model)
+needs_model = pytest.mark.skipif(data_store.risk_model() is None, reason="run pipeline/build_risk_model.py first")
+
+
+@needs_model
+def test_fitted_chance_rises_with_storm_size_and_interval_contains_it():
+    net, model = build(), data_store.risk_model()
+    order = {"low": 0, "moderate": 1, "high": 2}
+    for p in net.premises.values():
+        res = [risk.assess(net, p, sev, 0, model=model) for sev in SEVERITIES]
+        if res[0].status != "calculated":
+            continue
+        probs = [r.probability for r in res]
+        assert probs == sorted(probs) and len(set(probs)) == len(probs)
+        assert [order[r.band] for r in res] == sorted(order[r.band] for r in res)
+        for r in res:
+            assert r.method == "fitted_model" and r.score is None
+            assert 0 < r.probability_low <= r.probability <= r.probability_high < 1
+
+
+@needs_model
+def test_fitted_band_follows_documented_thresholds():
+    for prob, band in [(0.01, "low"), (0.049, "low"), (0.05, "moderate"), (0.149, "moderate"), (0.15, "high")]:
+        assert risk._prob_band(prob) == band
+
+
+@needs_model
+def test_fitted_data_flag_lowers_confidence_not_chance():
+    model = data_store.risk_model()
+    flagged = build(extra_premises=[premise("P-F", "C", ["F1", "REC"], flags=["customer_layer_transformer_differs"])])
+    rf = risk.assess(flagged, flagged.premises["P-F"], "severe", 0, model=model)
+    rc = risk.assess(flagged, flagged.premises["P-C"], "severe", 0, model=model)
+    assert rf.probability == rc.probability and rf.confidence.points < rc.confidence.points
+
+
+@needs_model
+def test_fitted_confidence_tracks_interval_spread():
+    """Confidence is no longer constant: a narrow interval inside one band scores higher than a wide one."""
+    net, model = build(), data_store.risk_model()
+    p = net.premises["P-C"]
+    small, big = (risk.assess(net, p, sev, 0, model=model) for sev in ("minor", "major"))
+    assert small.confidence.points > big.confidence.points
+    assert {small.confidence.level, big.confidence.level} != {small.confidence.level}
+
+
+@needs_model
+def test_model_card_reports_held_out_storm_validation():
+    card = risk.model_card(data_store.risk_model())
+    assert card.training_storms >= 10 and card.training_premises > 50_000
+    assert 0.5 < card.within_storm_auc < card.pooled_auc <= 1
+    assert any("storm size" in n for n in card.notes)
 
 
 # ------------------------------------------------------------------ protection / impact

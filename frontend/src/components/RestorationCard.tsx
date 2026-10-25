@@ -300,6 +300,53 @@ export function RestorationCard({ result: r, loading, active, crew, onCrew, pend
             </details>
           )}
 
+          {r.backtest && (
+            <details>
+              <summary>Check against the real repair pace ({r.backtest.event})</summary>
+              <p className="small">
+                The damage records say {r.backtest.records_used} of these repairs were finished by day{" "}
+                {r.backtest.observed_finish_day} after the storm's first report. This model matches that pace with{" "}
+                <strong>
+                  {r.backtest.implied_crews_optimistic === r.backtest.implied_crews_conservative
+                    ? crewsText(r.backtest.implied_crews_optimistic, true)
+                    : r.backtest.implied_crews_optimistic === null
+                      ? crewsText(null, true)
+                      : `${r.backtest.implied_crews_optimistic} to ${crewsText(r.backtest.implied_crews_conservative, true)}`}
+                </strong>{" "}
+                of {r.params.crew_size} people. With the crews you selected it finishes in{" "}
+                {r.backtest.your_crews_finish_days.join(" to ")} days.
+              </p>
+              <div className="table-wrap">
+                <table className="jobs small">
+                  <caption className="small">Share of the storm's repair records closed by each day</caption>
+                  <thead>
+                    <tr>
+                      {r.backtest.observed_pace.map((d) => (
+                        <th key={d.day} scope="col">
+                          Day {d.day}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {r.backtest.observed_pace.map((d) => (
+                        <td key={d.day} className="mono">
+                          {Math.round(d.share_repaired * 100)}%
+                        </td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="muted small">
+                {r.backtest.note}
+                {r.backtest.excluded_closure_lag > 0 &&
+                  ` ${r.backtest.excluded_closure_lag} record(s) closed more than a month later were left out as paperwork, not repairs.`}
+              </p>
+            </details>
+          )}
+
           <details>
             <summary>Crew schedule</summary>
             <label className="field compact">

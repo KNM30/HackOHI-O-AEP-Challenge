@@ -12,6 +12,7 @@ import os
 import re
 import time
 
+from . import risk as risk_mod
 from . import schemas as s
 from .briefing import Bundle, run_simulation
 
@@ -65,6 +66,14 @@ def _clean_obj(o):
 
 
 # ------------------------------------------------------------------ snapshot
+def _chance(r: s.RiskResult) -> str | None:
+    """'about 23% (90% range 8% to 50%)' for the fitted model; None for the heuristic band."""
+    if r.probability is None:
+        return None
+    return (f"about {risk_mod.pct(r.probability)} (90% range {risk_mod.pct(r.probability_low)} to "
+            f"{risk_mod.pct(r.probability_high)})")
+
+
 def build_snapshot(b: Bundle, previous: s.PreviousEstimate | None) -> dict:
     r = b.risk
     snap: dict = {
@@ -74,8 +83,10 @@ def build_snapshot(b: Bundle, previous: s.PreviousEstimate | None) -> dict:
                     "service_type": b.premise["service_type"]},
         "declared_needs": {"medical_power_dependent": b.req.preferences.medical_power_dependent,
                            "accessibility": list(b.req.preferences.accessibility)},
-        "risk": {"kind": "pre-storm heuristic band (not a probability)", "status": r.status,
+        "risk": {"kind": ("pre-storm chance from a model validated on past storms" if r.method == "fitted_model"
+                          else "pre-storm heuristic band (not a probability)"), "status": r.status,
                  "severity_scenario": r.severity_label, "band": r.band, "score_0_100": r.score,
+                 "chance": _chance(r),
                  "confidence": r.confidence.level if r.confidence else None,
                  "factors": [{"name": f.name, "value": f.value, "points": f.points, "max_points": f.max_points}
                              for f in r.factors],
@@ -89,7 +100,7 @@ def build_snapshot(b: Bundle, previous: s.PreviousEstimate | None) -> dict:
                    "warranted_now": b.alerts.warranted_now,
                    "messages": [{"type": m.type, "status": m.status, "reason": m.status_reason}
                                 for m in b.alerts.messages],
-                   "rules": [x.description for x in b.alerts.rules]},
+                   "rules": [f"{'Met now' if x.active else 'Not met'}: {x.description}" for x in b.alerts.rules]},
         "scenario": None, "restoration": None, "what_if": None, "previous": None,
     }
     if b.impact and b.restoration:
@@ -140,7 +151,10 @@ def build_snapshot(b: Bundle, previous: s.PreviousEstimate | None) -> dict:
                                                  "all_repairs_finished_earliest_h": R2.overall.lower_h,
                                                  "all_repairs_finished_latest_h": R2.overall.upper_h}}
     if previous:
-        snap["previous"] = previous.model_dump()
+        prev = previous.model_dump()
+        if prev.get("range_kind") != "bounded":
+            prev["upper_h"] = None  # only a bounded estimate has a real latest time; others are "at least"
+        snap["previous"] = prev
     snap = _clean_obj(snap)
     if len(json.dumps(snap)) > MAX_SNAPSHOT_CHARS:  # bounded context: trim the longest lists first
         snap["guidance"] = snap["guidance"][:6]
@@ -177,12 +191,14 @@ def deterministic(intent: str, snap: dict, question: str) -> s.AnswerSections:
     if intent == "risk":
         if risk["status"] != "calculated":
             return _sec(limitations=[risk["fallback"] or "Risk could not be estimated."], actions=actions)
+        level = (f"a model estimate of {risk['chance']} that storm damage cuts your supply" if risk["chance"]
+                 else f"heuristic score {risk['score_0_100']}/100, not a probability")
         return _sec(
-            estimates=[f"Pre-storm risk is {risk['band']} (heuristic score {risk['score_0_100']}/100, not a "
-                       f"probability) under the {risk['severity_scenario'].lower()}, with {risk['confidence']} "
-                       f"confidence."],
+            estimates=[f"Pre-storm risk is {risk['band']} ({level}) under the {risk['severity_scenario'].lower()}, "
+                       f"with {risk['confidence']} confidence."],
             facts=[f"{f['name']}: {f['value']}" + (f" ({f['points']}/{f['max_points']} points)"
-                                                     if f["points"] is not None else "") for f in risk["factors"]],
+                                                     if f["points"] is not None and f["max_points"] else "")
+                   for f in risk["factors"]],
             assumptions=risk["assumptions"][:2], limitations=risk["missing_inputs"][:2], actions=actions[:2])
     if intent in ("delay", "crew") and not rest:
         return _sec(limitations=[no_scen])
@@ -224,7 +240,7 @@ def deterministic(intent: str, snap: dict, question: str) -> s.AnswerSections:
         return _sec(facts=[f"Opted in: {'yes' if a['opted_in'] else 'no'}; channel: {a['channel']} (demo only, "
                            f"nothing is delivered)."] + [f"{m['type'].replace('_', ' ')}: {m['reason']}"
                                                          for m in a["messages"]],
-                    assumptions=a["rules"][:3])
+                    assumptions=a["rules"])
     if intent == "changed":
         prev = snap["previous"]
         if not prev:
@@ -242,10 +258,13 @@ def deterministic(intent: str, snap: dict, question: str) -> s.AnswerSections:
             diffs.append(f"The kind of estimate changed from {prev['range_kind'].replace('_', ' ')} to "
                          f"{rest['kind'].replace('_', ' ')}.")
         est = [f"Now: {rest['display']}." if rest else "Now: no scenario is active."]
-        if prev.get("upper_h") is not None:
-            h = prev["upper_h"]
-            est.append(f"Before: latest modeled time about {h:.0f} h." if h < 48 else
-                       f"Before: latest modeled time about {h / 24:.1f} days.")
+        def about(h: float) -> str:
+            return f"about {h:.0f} h" if h < 48 else f"about {h / 24:.1f} days"
+
+        if prev.get("range_kind") == "bounded" and prev.get("upper_h") is not None:
+            est.append(f"Before: latest modeled time {about(prev['upper_h'])}.")
+        elif prev.get("range_kind") == "lower_bound_only" and prev.get("lower_h") is not None:
+            est.append(f"Before: at least {about(prev['lower_h'])} (part of the work was not modeled).")
         return _sec(facts=diffs or ["No input I can see changed; the scenario or home may differ."],
                     estimates=est)
     return _sec(limitations=["I can answer questions about your home's simulated risk, damage scenario, "
@@ -267,7 +286,7 @@ The JSON snapshot in the user turn is the only source of truth. Rules:
 3. Safety and preparation advice: only restate items from snapshot.guidance. Do not add safety instructions.
 4. Everything about outages and restoration is simulated. Never claim a real or confirmed outage (unless
    alerts.simulated_outage_confirmed is true, and then call it simulated), an official AEP statement, a guaranteed
-   time, a probability, or priority restoration (including for declared medical needs).
+   time, a probability other than snapshot.risk.chance (quote it as given, with its range), or priority restoration (including for declared medical needs).
 5. Put each point in the right section: facts (supplied data), assumptions (model assumptions), estimates (model
    outputs, labelled as simulated or heuristic), actions (from guidance), limitations (what is unknown or cannot be
    answered). At most 4 short, plain-language sentences per section. Leave sections empty when not relevant.
@@ -449,6 +468,8 @@ def grounding_problems(ans: s.AnswerSections, snap: dict) -> list[str]:
         text = _spell(line)
         for sentence in _sentences(text):
             for pat, problem, negatable in CLAIMS:
+                if problem == "states a probability" and (snap.get("risk") or {}).get("chance"):
+                    continue  # the chance itself is calculated; its percentages are checked below
                 if pat.search(sentence) and not (negatable and NEGATION.search(sentence)):
                     problems.add(problem)
             if CONFIRM_RE.search(sentence) and not (confirmed and re.search(r"simulat", sentence, re.I)) \

@@ -9,11 +9,12 @@ from __future__ import annotations
 import hashlib
 import math
 from dataclasses import dataclass, field
+from datetime import date
 
 from . import labor_config as cfg
 from . import schemas as s
 from .network import CircuitNetwork
-from .scenarios import Loc, Scenario, Trip, premise_status, trip_for
+from .scenarios import Loc, Scenario, Trip, event_label, premise_status, replay_event, trip_for
 
 BOUNDS = ("optimistic", "conservative")
 B = {"optimistic": 0, "conservative": 1}
@@ -472,17 +473,29 @@ def critical_priority(net: CircuitNetwork, jobs: list[Job], params: CrewParams) 
 TARGETS = [(48.0, "2 days"), (72.0, "3 days"), (168.0, "1 week")]
 
 
+def finish_by_crews(jobs: list[Job], params: CrewParams, stop_h: float | None = None) -> dict[int, tuple]:
+    """(optimistic, conservative) end of all modeled work for 1..20 crews, other inputs fixed.
+
+    Leaves the jobs scheduled with the last crew count tried; callers reschedule afterwards.
+    """
+    sched = [j for j in jobs if j.schedulable]
+    finish: dict[int, tuple[float, float]] = {}
+    if not sched:
+        return finish
+    for n in range(1, cfg.BACKTEST_MAX_CREWS + 1):
+        schedule(jobs, CrewParams(**{**params.__dict__, "crews": n}))
+        finish[n] = tuple(max(j.schedule[bd][2] for j in sched) + cfg.REENERGIZE_H[B[bd]] for bd in BOUNDS)
+        if stop_h is not None and finish[n][1] <= stop_h:
+            break
+    return finish
+
+
 def crew_targets(jobs: list[Job], params: CrewParams) -> s.CrewTargets | None:
     """Fewest crews (1-20, other inputs fixed) whose schedule finishes all modeled work by each target."""
     sched = [j for j in jobs if j.schedulable]
     if not sched:
         return None
-    finish: dict[int, tuple[float, float]] = {}
-    for n in range(1, 21):
-        schedule(jobs, CrewParams(**{**params.__dict__, "crews": n}))
-        finish[n] = tuple(max(j.schedule[bd][2] for j in sched) + cfg.REENERGIZE_H[B[bd]] for bd in BOUNDS)
-        if finish[n][1] <= TARGETS[0][0]:
-            break
+    finish = finish_by_crews(jobs, params, stop_h=TARGETS[0][0])
 
     def needed(target: float, b: int) -> int | None:
         return next((n for n in sorted(finish) if finish[n][b] <= target), None)
@@ -496,6 +509,51 @@ def crew_targets(jobs: list[Job], params: CrewParams) -> s.CrewTargets | None:
     return s.CrewTargets(scope_complete=complete, note=note, targets=[
         s.CrewTarget(target_h=t, label=lbl, crews_needed_optimistic=needed(t, 0),
                      crews_needed_conservative=needed(t, 1)) for t, lbl in TARGETS])
+
+
+def backtest(net: CircuitNetwork, scen: Scenario, jobs: list[Job], params: CrewParams) -> s.Backtest | None:
+    """Compare the replayed storm's modeled finish with the repair dates ARCOS recorded for it.
+
+    The crew count is the unknown, so this reports the crews this model needs to match the observed
+    pace (an implied crew count). It checks that the labor and scheduling assumptions give a plausible
+    pace; it is not an independent validation of restoration times.
+    """
+    if scen.id != "historical_replay":
+        return None
+    event = replay_event(net)
+    recs = [d for d in net.damage if event and net.event_of.get(d["public_id"]) == event
+            and d.get("match_status") == "matched"]
+    if not recs:
+        return None
+    start = min(date.fromisoformat(d["report_date"]) for d in recs)
+    days = [(date.fromisoformat(d["repaired_date"]) - start).days for d in recs if d.get("repaired_date")]
+    used = sorted(x for x in days if 0 <= x <= cfg.BACKTEST_CLOSURE_LAG_DAYS)
+    if not used:
+        return None
+    finish_day = used[max(0, math.ceil(cfg.BACKTEST_SHARE * len(used)) - 1)]
+    pace = [s.PaceDay(day=d, share_repaired=round(sum(1 for x in used if x <= d) / len(used), 3))
+            for d in range(0, used[-1] + 1)]
+    target_h = (finish_day + 1) * 24  # repaired dates are day-granular: by the end of that day
+    finish = finish_by_crews(jobs, params)
+    schedule(jobs, params)
+    sched = [j for j in jobs if j.schedulable]
+    mine = [round((max(j.schedule[bd][2] for j in sched) + cfg.REENERGIZE_H[B[bd]]) / 24, 1) for bd in BOUNDS] \
+        if sched else []
+
+    def implied(b: int) -> int | None:
+        return next((n for n in sorted(finish) if finish[n][b] <= target_h), None)
+
+    complete = len(sched) == len(jobs) and not any(j.partial for j in jobs)
+    note = ("Dates in the records are whole days and count from the storm's first report, while the model counts "
+            "from the start of the response, so the comparison is accurate to about a day. The real number of crews "
+            "is not in the data: the implied crew count is what this model needs to match the recorded pace, a "
+            "plausibility check rather than an independent validation.")
+    if not complete:
+        note += " Some repair work is not modeled, so the implied crews are minimums."
+    return s.Backtest(event=event_label(event)[1], records=len(recs), records_used=len(used),
+                      excluded_closure_lag=len(days) - len(used), observed_finish_day=finish_day, observed_pace=pace,
+                      implied_crews_optimistic=implied(0), implied_crews_conservative=implied(1),
+                      your_crews_finish_days=mine, note=note)
 
 
 # ------------------------------------------------------------------ response
@@ -561,6 +619,7 @@ def simulate(net: CircuitNetwork, p: dict, scen: Scenario, params: CrewParams, l
     uses_assumption = any(j.assumed for j in jobs if j.status_of.get(pid))
     workbook_only = _workbook_only_lower(net, p, scen, params, labor, status) if uses_assumption else None
     targets = crew_targets(jobs, params)
+    pace = backtest(net, scen, jobs, params)
     priority = critical_priority(net, jobs, params)  # also leaves jobs scheduled with params
     if priority is None:
         schedule(jobs, params)
@@ -737,6 +796,7 @@ def simulate(net: CircuitNetwork, p: dict, scen: Scenario, params: CrewParams, l
         critical_facilities=critical_out,
         critical_priority=priority,
         crew_targets=targets,
+        backtest=pace,
         jobs=[_job_out(j, labor) for j in jobs],
         warnings=warnings,
         assumptions=[

@@ -68,7 +68,7 @@ Only all three together produce a "would be sent (simulated)" message.
 
 | Trigger | Rule |
 |---|---|
-| Elevated storm risk | The pre-storm band reaches `PRE_STORM_MIN_BAND` (default `high`) under the chosen severity scenario |
+| Elevated storm risk | The pre-storm band reaches `PRE_STORM_MIN_BAND` (default `high`, a 15% or greater chance with the fitted risk model) under the chosen severity scenario |
 | Outage confirmed | Only after the explicit **"Simulate: outage confirmed"** action for this scenario, and only if the premise is interrupted in it. Risk and historical damage never confirm an outage. |
 | Estimate updated | After confirmation: the latest modeled time moves by at least max(2 h, 25%) since the last message sent |
 | Loss of confidence or estimate | The estimate kind changes (for example to "cannot estimate"), or confidence drops from moderate to low |

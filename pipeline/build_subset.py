@@ -29,11 +29,8 @@ def _round_coords(coords):
     return [[round(x, 6), round(y, 6)] for x, y in coords]
 
 
-def write_circuit(ctx: cm.Context, cid: str, facility_links) -> dict:
-    model = cm.build_circuit_model(ctx, cid)
-    out = PROCESSED / "circuits" / cid
-    out.mkdir(parents=True, exist_ok=True)
-
+def circuit_doc(model: dict, cid: str, facility_links) -> dict:
+    """The model.json document (allowlisted fields) for a built circuit model."""
     premises = [{k: v for k, v in p.items() if k != "_premise"} for p in model["premises"]]
     devices = {d["public_id"]: {k: v for k, v in d.items() if k != "zone_premises"}
                for d in model["devices"].values()}
@@ -55,6 +52,14 @@ def write_circuit(ctx: cm.Context, cid: str, facility_links) -> dict:
         critical_facilities=critical.for_circuit(facility_links, cid, model["transformers"]),
         critical_match_cap_m=critical.CRITICAL_MATCH_M,
     )
+    return doc
+
+
+def write_circuit(ctx: cm.Context, cid: str, facility_links) -> dict:
+    model = cm.build_circuit_model(ctx, cid)
+    out = PROCESSED / "circuits" / cid
+    out.mkdir(parents=True, exist_ok=True)
+    doc = circuit_doc(model, cid, facility_links)
     (out / "model.json").write_text(json.dumps(doc, default=str), encoding="utf-8")
 
     # display lines: allowlisted properties only
@@ -72,7 +77,7 @@ def write_circuit(ctx: cm.Context, cid: str, facility_links) -> dict:
                                           bridge=bool(e["bridge"]))))
     (out / "lines.geojson").write_text(json.dumps(dict(type="FeatureCollection", features=feats)), encoding="utf-8")
     s = model["stats"]
-    print(f"  {cid}: {s['premises']} premises, {len(devices)} devices, {len(transformers)} transformers, "
+    print(f"  {cid}: {s['premises']} premises, {len(doc['devices'])} devices, {len(doc['transformers'])} transformers, "
           f"{len(feats)} line features, {s['damage_records']} damage records "
           f"({s['damage_on_network']} on network), chain consistency {s['chain_consistency']}, "
           f"{len(doc['critical_facilities'])} critical facilities linked")

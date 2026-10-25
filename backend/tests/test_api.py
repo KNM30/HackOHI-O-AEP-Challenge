@@ -56,13 +56,17 @@ def test_historical_damage_is_rounded_and_labelled():
 
 
 def test_risk_endpoint_is_pre_storm_and_monotone():
-    scores = [client.get(f"/api/premises/{DEMO}/risk", params={"severity": s}).json()["score"]
-              for s in ("minor", "moderate", "severe")]
-    assert scores == sorted(scores)
+    bodies = [client.get(f"/api/premises/{DEMO}/risk", params={"severity": s}).json()
+              for s in ("minor", "moderate", "major", "severe")]
+    key = "probability" if bodies[0]["method"] == "fitted_model" else "score"
+    vals = [b[key] for b in bodies]
+    assert vals == sorted(vals)
     body = client.get(f"/api/premises/{DEMO}/risk").json()
     assert body["kind"] == "pre_storm_risk" and body["severity"] == "moderate"
-    assert "probab" not in " ".join(f["value"] for f in body["factors"]).lower()
-    assert "%" not in str(body["score"])
+    if body["method"] == "fitted_model":
+        assert body["score"] is None and body["model_card"]["training_storms"] >= 10
+    else:
+        assert "%" not in str(body["score"])
     assert client.get(f"/api/premises/{DEMO}/risk", params={"severity": "hurricane"}).status_code == 422
 
 

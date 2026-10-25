@@ -1,12 +1,15 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
-from . import assistant, briefing, data_store, restoration, risk, risk_config, scenarios, schemas
+from . import assistant, audit, briefing, data_store, restoration, risk, risk_config, scenarios, schemas
 from .config import CORS_ORIGINS
 from .context import circuit_map, premise_context, supply_path
 
 app = FastAPI(title="AI Outage Concierge (prototype)", version="0.1.0")
 app.add_middleware(CORSMiddleware, allow_origins=CORS_ORIGINS, allow_methods=["GET", "POST"], allow_headers=["*"])
+
+# Callers that send a well-formed X-Session-Id get their decisions recorded in the audit trail.
+SessionHeader = Header(None, alias="X-Session-Id", max_length=64)
 
 
 def _net(circuit_id: str):
@@ -68,16 +71,21 @@ def premise(premise_id: str):
 
 
 @app.get("/api/premises/{premise_id}/risk", response_model=schemas.RiskResult)
-def premise_risk(premise_id: str, severity: str = Query(risk_config.DEFAULT_SEVERITY, max_length=20)):
+def premise_risk(premise_id: str, severity: str = Query(risk_config.DEFAULT_SEVERITY, max_length=20),
+                 x_session_id: str | None = SessionHeader):
     if severity not in risk_config.SEVERITY:
         raise HTTPException(422, f"severity must be one of {', '.join(risk_config.SEVERITY)}")
     net, p = _premise(premise_id)
     path = supply_path(net, p.get("transformer_node"))
-    return risk.assess(net, p, severity, path.approximated_gaps if path else 0)
+    r = risk.assess(net, p, severity, path.approximated_gaps if path else 0)
+    audit.record(audit.session_of(x_session_id), "risk", premise_id, {"severity": severity},
+                 {"status": r.status, "band": r.band, "probability": r.probability,
+                  "confidence": r.confidence.level if r.confidence else None}, data_store.model_version())
+    return r
 
 
 @app.post("/api/circuits/{circuit_id}/simulation", response_model=schemas.SimulationResult)
-def simulation(circuit_id: str, req: schemas.SimulationRequest):
+def simulation(circuit_id: str, req: schemas.SimulationRequest, x_session_id: str | None = SessionHeader):
     """Evaluate one fixed scenario (a set of damage locations) for a premise.
 
     The job set and schedule depend only on the locations and crew inputs, so every
@@ -98,8 +106,17 @@ def simulation(circuit_id: str, req: schemas.SimulationRequest):
         raise HTTPException(503, str(e))
     impact = scenarios.evaluate(net, p, scen, scen.locations)
     params = restoration.CrewParams(**req.crew.model_dump())
-    return schemas.SimulationResult(impact=impact,
-                                    restoration=restoration.simulate(net, p, scen, params, labor_ref, impact))
+    result = schemas.SimulationResult(impact=impact,
+                                      restoration=restoration.simulate(net, p, scen, params, labor_ref, impact))
+    r = result.restoration
+    audit.record(audit.session_of(x_session_id), "simulation", req.premise_id,
+                 {"scenario": req.scenario_id, "damage_locations": len(req.location_ids), **req.crew.model_dump()},
+                 {"your_estimate": r.selected.display, "range_kind": r.selected.range_kind,
+                  "all_repairs_complete": r.overall.complete, "overall_lower_h": r.overall.lower_h,
+                  "overall_upper_h": r.overall.upper_h, "person_hours_low": r.overall.person_hours_low,
+                  "person_hours_high": r.overall.person_hours_high, "jobs": r.overall.jobs},
+                 data_store.model_version())
+    return result
 
 
 @app.get("/api/premises/{premise_id}/scenarios", response_model=schemas.ScenarioCatalog)
@@ -121,19 +138,41 @@ def premise_scenario(premise_id: str, req: schemas.ScenarioRequest):
 
 # ---------------------------------------------------------------- Milestone 4
 @app.post("/api/briefing", response_model=schemas.BriefingResponse)
-def briefing_endpoint(req: schemas.BriefingRequest):
+def briefing_endpoint(req: schemas.BriefingRequest, x_session_id: str | None = SessionHeader):
     """Guidance and alert previews for the premise, recomputed from the request inputs."""
     try:
-        return briefing.response(briefing.compute(req))
+        res = briefing.response(briefing.compute(req))
     except briefing.BriefingError as e:
         raise HTTPException(e.status, e.detail)
+    audit.record(audit.session_of(x_session_id), "briefing", req.premise_id,
+                 {"severity": req.severity, "scenario": req.simulation.scenario_id if req.simulation else None,
+                  "declared_medical": req.preferences.medical_power_dependent,
+                  "declared_accessibility": len(req.preferences.accessibility),
+                  "alerts_opted_in": req.alerts.opt_in, "channel": req.alerts.channel},
+                 {"guidance_items": len(res.guidance), "alerts_warranted": ", ".join(res.alerts.warranted_now) or None,
+                  "escalation": res.alerts.escalation is not None, "restoration_kind": res.restoration_kind},
+                 data_store.model_version())
+    return res
 
 
 @app.post("/api/assistant", response_model=schemas.AssistantResponse)
-def assistant_endpoint(req: schemas.AssistantRequest):
+def assistant_endpoint(req: schemas.AssistantRequest, x_session_id: str | None = SessionHeader):
     """Grounded Q&A over a sanitized snapshot of the same computation."""
     try:
         b = briefing.compute(req.briefing)
     except briefing.BriefingError as e:
         raise HTTPException(e.status, e.detail)
-    return assistant.answer(b, req)
+    res = assistant.answer(b, req)
+    # the question text is never stored: only its length and the classified intent
+    audit.record(audit.session_of(x_session_id), "assistant", req.briefing.premise_id,
+                 {"question_chars": len(req.question), "intent": res.intent},
+                 {"mode": res.mode, "status": res.status, "snapshot": res.snapshot_version},
+                 data_store.model_version())
+    return res
+
+
+@app.get("/api/audit", response_model=list[schemas.AuditEntry])
+def audit_trail(x_session_id: str | None = SessionHeader):
+    """This session's audit trail. Without a valid session header nothing is returned."""
+    session = audit.session_of(x_session_id)
+    return audit.for_session(session) if session else []

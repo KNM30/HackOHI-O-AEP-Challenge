@@ -7,12 +7,21 @@ tests check monotonicity and band boundaries, not specific premises.
 # Simulated storm severity: a scenario input chosen by the user, NOT a forecast.
 # The factor scales the susceptibility points; factors are increasing so higher
 # severity can never lower the score.
+# "factor" drives the fallback heuristic; "storm_size" (territory-wide ARCOS damage records)
+# drives the fitted model. Sizes come from a real past storm ("analog_event", read from
+# risk_model.json) except "minor", which uses the typical size of the small storms.
 SEVERITY = {
-    "minor": {"label": "Minor storm (scenario)", "factor": 0.6,
+    "minor": {"label": "Minor storm (scenario)", "factor": 0.6, "storm_size": 15, "analog_event": None,
+              "analog": "a typical small storm (about 15 damage reports area-wide)",
               "description": "Scattered wind gusts; isolated tree contact."},
-    "moderate": {"label": "Moderate storm (scenario)", "factor": 1.0,
+    "moderate": {"label": "Moderate storm (scenario)", "factor": 1.0, "analog_event": "2025-01-06..2025-01-07",
+                 "analog": "the January 2025 storm",
                  "description": "Sustained wind with widespread limb contact."},
-    "severe": {"label": "Severe storm (scenario)", "factor": 1.5,
+    "major": {"label": "Major storm (scenario)", "factor": 1.25, "analog_event": "2024-09-26..2024-10-02",
+              "analog": "the late-September 2024 storm (Helene's remnants)",
+              "description": "Strong, long-lasting wind; many trees down across the area."},
+    "severe": {"label": "Severe storm (scenario)", "factor": 1.5, "analog_event": "2025-02-12..2025-02-18",
+               "analog": "the February 2025 storm, the largest in the data",
                "description": "Damaging wind or ice; broken poles and downed lines likely."},
 }
 DEFAULT_SEVERITY = "moderate"
@@ -30,6 +39,19 @@ HISTORY_SATURATION_EVENTS = 3
 SERVICE_POINTS = {"Overhead": 10, "Underground": 0, "Unknown": 5}
 
 SCORE_CAP = 100
+
+# ---- fitted model (pipeline/build_risk_model.py -> data/processed/risk_model.json) ----
+MODEL_FEATURES = ["log_storm_size", "log_exposure_km", "hist_rate", "protect_depth", "overhead_service"]
+OVERHEAD_SERVICE_VALUE = {"Overhead": 1.0, "Underground": 0.0, "Unknown": 0.5}
+# Bands on the recalibrated chance. 5% is about 1 in 20; 15% is below the 19% of premises the
+# largest storm on record reached, so "high" means "comparable to that storm for you".
+PROB_BANDS = [(0.15, "high"), (0.05, "moderate"), (0.0, "low")]
+PROB_BORDERLINE_RATIO = 1.2  # within 20% (relative) of a band edge -> flagged as borderline
+INTERVAL_Z = 1.645  # 90% interval
+# Confidence for the fitted model: the 90% interval's spread across bands replaces the
+# "no validation" deduction; the data-quality deductions below still apply.
+INTERVAL_BAND_DEDUCTION = {1: 0, 2: 30, 3: 60}
+CONFIDENCE_LEVELS_FITTED = [(80, "high"), (50, "moderate"), (0, "low")]
 
 # Bands on the final heuristic score (after the severity factor).
 BANDS = [  # (lower bound inclusive, band)

@@ -50,6 +50,23 @@ def labor_reference() -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+@lru_cache(maxsize=1)
+def risk_model() -> dict | None:
+    """Fitted risk model from pipeline/build_risk_model.py; None falls back to the heuristic band."""
+    path = PROCESSED_DIR / "risk_model.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+
+
+def model_version() -> str:
+    """Which data builds produced an answer (for the audit trail)."""
+    rm = risk_model()
+    try:
+        labor = labor_reference().get("generated", "?")
+    except DataNotBuilt:
+        labor = "missing"
+    return f"risk model {rm['generated'] if rm else 'heuristic'}; labor reference {labor}; data {index().get('generated', '?')}"
+
+
 def find_premise(premise_id: str) -> tuple[CircuitNetwork, dict] | None:
     for c in index()["circuits"]:
         net = circuit(c["circuit_id"])

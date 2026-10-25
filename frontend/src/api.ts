@@ -1,5 +1,6 @@
 import type { ActiveScenario } from "./scenarioState";
 import type {
+  AuditEntry,
   AssistantResponse,
   BriefingRequest,
   BriefingResponse,
@@ -15,8 +16,17 @@ import type {
   ScenarioResult,
 } from "./types";
 
+// One random id per page load. The backend records this session's decisions in its audit trail
+// (hashed IDs, inputs and output summaries only) and returns them at /api/audit.
+export const SESSION_ID =
+  typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `s-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(path, init);
+  const headers = new Headers(init?.headers);
+  headers.set("X-Session-Id", SESSION_ID);
+  const res = await fetch(path, { ...init, headers });
   if (!res.ok) {
     let detail = res.statusText;
     try {
@@ -32,6 +42,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 const enc = encodeURIComponent;
 
 export const api = {
+  audit: (signal?: AbortSignal) => request<AuditEntry[]>("/api/audit", { signal }),
   circuits: () => request<CircuitSummary[]>("/api/circuits"),
   premises: (circuitId: string) => request<PremiseListItem[]>(`/api/circuits/${circuitId}/premises`),
   map: (circuitId: string) => request<CircuitMap>(`/api/circuits/${circuitId}/map`),

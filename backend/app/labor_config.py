@@ -161,6 +161,13 @@ UNSUPPORTED = {
 # Pole height class boundaries used by the workbook's pole table (feet).
 POLE_CLASS = [(35, "Small"), (55, "Medium"), (10_000, "Large")]
 
+# ---- historical pace check (replay scenario only) -----------------------------------
+# ARCOS repaired dates more than this many days after the storm's first report are treated as
+# record closure, not field repair, and left out of the observed pace.
+BACKTEST_CLOSURE_LAG_DAYS = 30
+BACKTEST_SHARE = 0.95  # "finished" = this share of the storm's repaired records
+BACKTEST_MAX_CREWS = 20
+
 # ---- labor adders (direct labor, so the ILM applies) --------------------------------
 # One access adder per job at most, only when the damage record reports an access issue.
 # "Access Constraint Adder" duplicates "Restricted Access Work" and is not also applied.

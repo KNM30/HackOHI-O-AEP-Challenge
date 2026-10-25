@@ -1,6 +1,6 @@
 import { useRef, type ReactNode } from "react";
 
-export type TabId = "overview" | "explore" | "ask";
+export type TabId = "overview" | "explore" | "ask" | "audit";
 
 export interface TabDef {
   id: TabId;

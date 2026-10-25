@@ -95,22 +95,41 @@ export interface SeverityOption {
 export interface RiskFactor {
   name: string;
   value: string;
+  /** heuristic: points toward the score. fitted model: signed percentage-point effect vs an average premise */
   points: number | null;
   max_points: number | null;
   explanation: string;
+  direction?: "raises" | "lowers" | "neutral" | null;
+}
+
+export interface RiskModelCard {
+  label_definition: string;
+  training_premises: number;
+  training_circuits: number;
+  training_storms: number;
+  pooled_auc: number;
+  within_storm_auc: number;
+  heuristic_within_storm_auc: number;
+  calibration: { bin: string; mean_predicted: number; observed: number; rows: number }[];
+  notes: string[];
 }
 
 export interface RiskResult {
   kind: "pre_storm_risk";
   status: "calculated" | "insufficient_data";
+  method: "fitted_model" | "heuristic";
   severity: string;
   severity_label: string;
   severity_options: SeverityOption[];
   band: "low" | "moderate" | "high" | null;
+  probability: number | null;
+  probability_low: number | null;
+  probability_high: number | null;
   score: number | null;
   score_note: string;
+  model_card: RiskModelCard | null;
   confidence: {
-    level: "moderate" | "low";
+    level: "high" | "moderate" | "low";
     points: number;
     reasons: { effect: number; text: string }[];
     ceiling_note: string;
@@ -260,7 +279,7 @@ export interface RestorationResult {
     basis: "not_interrupted" | "repair" | "isolation";
     controlling_jobs: string[];
     why: string[];
-    confidence: { level: "moderate" | "low"; points: number; reasons: { effect: number; text: string }[]; ceiling_note: string };
+    confidence: { level: "high" | "moderate" | "low"; points: number; reasons: { effect: number; text: string }[]; ceiling_note: string };
     range_kind: "not_interrupted" | "bounded" | "lower_bound_only" | "conditional" | "crew_infeasible" | "insufficient_data";
     conditional: {
       if_isolated_low_h: number;
@@ -299,6 +318,18 @@ export interface RestorationResult {
   crew_targets: {
     targets: { target_h: number; label: string; crews_needed_optimistic: number | null; crews_needed_conservative: number | null }[];
     scope_complete: boolean;
+    note: string;
+  } | null;
+  backtest?: {
+    event: string;
+    records: number;
+    records_used: number;
+    excluded_closure_lag: number;
+    observed_finish_day: number;
+    observed_pace: { day: number; share_repaired: number }[];
+    implied_crews_optimistic: number | null;
+    implied_crews_conservative: number | null;
+    your_crews_finish_days: number[];
     note: string;
   } | null;
   jobs: RepairJob[];
@@ -435,4 +466,15 @@ export interface AssistantResponse {
   intent: string;
   answer: Record<"facts" | "assumptions" | "estimates" | "actions" | "limitations", string[]>;
   disclaimer: string;
+}
+
+export interface AuditEntry {
+  seq: number;
+  at: string;
+  session: string;
+  endpoint: "risk" | "simulation" | "briefing" | "assistant";
+  premise_id: string | null;
+  inputs: Record<string, string | number | boolean | null>;
+  outputs: Record<string, string | number | boolean | null>;
+  model: string;
 }

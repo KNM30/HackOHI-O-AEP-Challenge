@@ -118,9 +118,12 @@ class SeverityOption(BaseModel):
 class RiskFactor(BaseModel):
     name: str
     value: str
+    # heuristic: points toward the 0-100 score. fitted model: change in your chance, in percentage
+    # points, against an average premise in the service area (signed; max_points is None)
     points: float | None
     max_points: float | None
     explanation: str
+    direction: Literal["raises", "lowers", "neutral"] | None = None
 
 
 class ConfidenceReason(BaseModel):
@@ -129,21 +132,47 @@ class ConfidenceReason(BaseModel):
 
 
 class Confidence(BaseModel):
-    level: Literal["moderate", "low"]
+    level: Literal["high", "moderate", "low"]
     points: int
     reasons: list[ConfidenceReason]
     ceiling_note: str
 
 
+class CalibrationRow(BaseModel):
+    bin: str
+    mean_predicted: float
+    observed: float
+    rows: int
+
+
+class RiskModelCard(BaseModel):
+    """How the fitted model was trained and how well it did on storms it had not seen."""
+    label_definition: str
+    training_premises: int
+    training_circuits: int
+    training_storms: int
+    pooled_auc: float
+    within_storm_auc: float
+    heuristic_within_storm_auc: float
+    calibration: list[CalibrationRow]
+    notes: list[str]
+
+
 class RiskResult(BaseModel):
     kind: Literal["pre_storm_risk"] = "pre_storm_risk"
     status: Literal["calculated", "insufficient_data"]
+    method: Literal["fitted_model", "heuristic"] = "heuristic"
     severity: str
     severity_label: str
     severity_options: list[SeverityOption]
     band: Literal["low", "moderate", "high"] | None
-    score: int | None  # heuristic points 0-100, NOT a probability
+    # fitted model: recalibrated chance that storm damage cuts your supply, with a 90% interval
+    probability: float | None = None
+    probability_low: float | None = None
+    probability_high: float | None = None
+    score: int | None  # heuristic points 0-100, NOT a probability (heuristic method only)
     score_note: str = "Heuristic points (0-100) used only to place the band. Not a probability."
+    model_card: RiskModelCard | None = None
     confidence: Confidence | None
     factors: list[RiskFactor]
     assumptions: list[str]
@@ -406,6 +435,25 @@ class CrewTargets(BaseModel):
     note: str
 
 
+class PaceDay(BaseModel):
+    day: int  # days after the storm's first report (day 0 = first report date)
+    share_repaired: float
+
+
+class Backtest(BaseModel):
+    """Replay only: the crews this model needs to match the repair pace recorded in ARCOS."""
+    event: str
+    records: int
+    records_used: int
+    excluded_closure_lag: int
+    observed_finish_day: int  # day by which BACKTEST_SHARE of the used records were repaired
+    observed_pace: list[PaceDay]
+    implied_crews_optimistic: int | None  # None: not reached within BACKTEST_MAX_CREWS
+    implied_crews_conservative: int | None
+    your_crews_finish_days: list[float]  # [optimistic, conservative] with the crews you selected
+    note: str
+
+
 class RestorationResult(BaseModel):
     state: Literal["simulated"]
     time_reference: str
@@ -416,6 +464,7 @@ class RestorationResult(BaseModel):
     critical_facilities: list[CriticalRestoration] = []
     critical_priority: CriticalPriority | None = None
     crew_targets: CrewTargets | None = None
+    backtest: Backtest | None = None
     jobs: list[RepairJob]
     warnings: list[str]
     assumptions: list[str]
@@ -590,5 +639,17 @@ class AssistantResponse(BaseModel):
     intent: str
     answer: AnswerSections
     disclaimer: str
+
+class AuditEntry(BaseModel):
+    """One returned decision: hashed IDs, inputs and an output summary only (no typed text)."""
+    seq: int
+    at: str  # UTC, ISO 8601
+    session: str
+    endpoint: str
+    premise_id: str | None
+    inputs: dict[str, str | int | float | bool | None]
+    outputs: dict[str, str | int | float | bool | None]
+    model: str
+
 
 ScenarioResult.model_rebuild()

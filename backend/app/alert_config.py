@@ -1,7 +1,7 @@
 """Prototype alert rules (documented in docs/alerts_and_guidance.md). Not AEP policy."""
 
 # Pre-storm alert when the pre-storm risk band (under the chosen severity scenario) is at
-# least this level.
+# least this level. With the fitted model, "high" means a 15% or greater chance.
 PRE_STORM_MIN_BAND = "high"
 BAND_RANK = {"low": 0, "moderate": 1, "high": 2}
 
@@ -24,8 +24,8 @@ CHANNELS = {
 }
 
 TIMING = [
-    "Pre-storm: once, when the storm-severity scenario puts your risk in the high band (a real system would use "
-    "forecast timing, which this prototype does not have).",
+    "Pre-storm: once, when the storm-severity scenario puts your risk in the high band (a 15% or greater chance; a "
+    "real system would use forecast timing, which this prototype does not have).",
     "Outage confirmed: only after an explicit (simulated) confirmation that your home is out.",
     "Estimate updated: when the restoration estimate changes meaningfully, gets less certain, or can no longer be "
     "estimated - not on every recalculation.",

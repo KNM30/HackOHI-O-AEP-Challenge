@@ -215,10 +215,9 @@ class CircuitNetwork:
             return None
         ref = dmg.get("matched_ref")
         if layer in ("fuse", "recloser") and ref in self.devices:
-            dev = self.devices[ref]  # the damaged protective device itself opens
+            dev_id = ref  # the damaged protective device itself opens
         else:
-            dev = self.protecting_device(node)
-        dev_id = dev["public_id"] if dev else None
+            dev_id = self.protector.get(node)  # precomputed protecting_device(); root -> breaker (None)
         affects = dev_id is None or dev_id in premise["chain"]
         on_path = self.is_ancestor(node, xf_node)
         return Relation(affects or on_path, on_path, False, dev_id)

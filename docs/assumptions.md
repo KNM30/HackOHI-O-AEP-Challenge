@@ -168,3 +168,31 @@ range and for transparent assumptions, so the prototype fills this one gap expli
 The rate lives in `labor_config.RESTRING`; changing it there changes every estimate.
 - Category averages hide size variation (except transformers by kVA and poles by height). Ranges in M3 will reflect
   this rather than present single values.
+
+## Pre-storm risk model (M6)
+
+Details and validation tables are in [risk_model.md](risk_model.md).
+
+- **Label is a proxy.** "Hit" means at least one ARCOS damage record from that storm would have interrupted the premise
+  under the app's protection model. The extract has no customer-outage records.
+- **Storms** are territory-wide groups of report dates within 2 days; only the 11 with at least 10 records train the
+  model. Severity scenarios stand for real storm sizes (15, 46, 194, 1,254 records).
+- **Training scope:** all circuits except circuit 70, which fails in the circuit builder. Two circuits are still
+  processed for the app; the model only needs per-premise features, which are computed by the same code at request
+  time.
+- **Recalibration** (two parameters, fitted on the held-out predictions) corrects over-prediction above about 10%. The
+  recalibrated calibration table is in-sample for those two parameters.
+- **Bands** on the chance: low under 5%, moderate 5% to 15%, high 15% or more. The pre-storm alert still needs
+  the high band (15% or more). With probability bands that is stricter than before: in a major storm only 10 of 893
+  Circuit 18 premises qualify, and in a severe storm 410. Lowering it to "moderate" (5%) is a one-line change in
+  `alert_config.PRE_STORM_MIN_BAND`.
+- **Heuristic fallback** stays in the code for when `risk_model.json` is missing, and is the baseline in the
+  validation.
+
+## Audit trail (M6)
+
+- The backend keeps the last 2,000 decisions (risk, simulation, briefing, assistant) in memory, keyed by a random
+  per-page session id sent as `X-Session-Id`. Entries hold hashed IDs, inputs, an output summary and the model build.
+  For assistant questions only the length and classified topic are stored, never the text.
+- It is lost on restart and is not a compliance log. A production system would need durable, access-controlled
+  storage.
